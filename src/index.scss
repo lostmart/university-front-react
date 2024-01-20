@@ -1,0 +1,28 @@
+:root {
+	--font-color: #f8f9fa;
+	--bg-color: #3a404b;
+}
+@font-face {
+	font-family: "Poppins", sans-serif;
+	src: url("./assets/fonts/Poppins-Regular.ttf") format("ttf");
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+}
+
+body {
+	background-color: var(--bg-color);
+	color: var(--font-color);
+}
+
+.container {
+	width: clamp(360px, 100%, 980px);
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+}
