@@ -1,4 +1,4 @@
-import styles from "./FooterComp.module.scss"
+import styles from "./Footer.module.scss"
 
 const FooterComp = () => {
 	const date = new Date()
