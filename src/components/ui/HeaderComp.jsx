@@ -3,7 +3,8 @@ import { NavLink } from "react-router-dom"
 import NavBar from "./NavBar"
 import logo from "../../assets/img/favicons/android-chrome-192x192.png"
 
-import styles from "./headerComp.module.scss"
+import styles from "./HeaderComp.module.scss"
+import NavFull from "./NavFull"
 
 const HeaderComp = () => {
 	const [showMenuBar, setShowMenuBar] = useState(false)
@@ -13,7 +14,11 @@ const HeaderComp = () => {
 			<img src={logo} alt="horizon university logo" />
 			<NavBar />
 			<div className={styles.logIn}>
-				<NavLink to="/" className="btn btn-primary-outline">
+				<NavLink
+					to="/"
+					className="btn btn-primary-outline"
+					style={{ width: "82px" }}
+				>
 					Login
 				</NavLink>
 				<NavLink to="/" className="btn btn-primary">
@@ -22,7 +27,7 @@ const HeaderComp = () => {
 			</div>
 			<button
 				type="button"
-				onClick={() => setShowMenuBar(true)}
+				onClick={() => setShowMenuBar(!showMenuBar)}
 				aria-label="Toggle menu navigation"
 				className={styles.navToggler}
 			>
@@ -30,6 +35,7 @@ const HeaderComp = () => {
 				<span className={showMenuBar ? "rotate-second" : ""}></span>
 				<span className={showMenuBar ? "rotate-third" : ""}></span>
 			</button>
+			<NavFull showMenuBar={showMenuBar} />
 		</header>
 	)
 }

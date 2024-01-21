@@ -1,0 +1,29 @@
+@import "../../sass/variables";
+
+.navFull {
+
+	position: fixed;
+	background-color: $bg-color;
+	width: 95%;
+    right: 2%;
+    left: 2%;
+	z-index: 1;
+	height: 100%;
+	top: 10px;
+	justify-content: center;
+	align-items: center;
+
+    ul{
+        list-style-type: none;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 2em;
+    }
+
+    a{
+        text-decoration: none;
+        color: $font-color;
+    }
+
+}

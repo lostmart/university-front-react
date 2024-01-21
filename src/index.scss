@@ -29,3 +29,16 @@ body {
 	margin-right: auto;
 	margin-left: auto;
 }
+
+// menu animations
+.rotate-first {
+	transform: rotate(45deg) translate(6px, 6px);
+}
+
+.rotate-second {
+	transform: scale(0);
+}
+
+.rotate-third {
+	transform: rotate(-45deg) translate(6px, -6px);
+}

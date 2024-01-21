@@ -12,7 +12,7 @@
 	.logIn {
 		display: none;
 		justify-content: space-between;
-		width: 160px;
+		width: 175px;
 	}
 
 	.navToggler {
@@ -26,6 +26,8 @@
 		cursor: pointer;
 		padding: 5px;
 		transition: background-color 180ms ease-in-out;
+		position: relative;
+		z-index: 10;
 
 		&:hover {
 			background-color: rgba(128, 128, 128, 0.158);
@@ -48,16 +50,4 @@
 			display: none;
 		}
 	}
-}
-
-.rotate-first {
-	transform: rotate(45deg) translate(6px, 6px);
-}
-
-.rotate-second {
-	transform: scale(0);
-}
-
-.rotate-third {
-	transform: rotate(-45deg) translate(6px, -6px);
 }
