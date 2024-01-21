@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { NavLink } from "react-router-dom"
 import NavBar from "./NavBar"
 import logo from "../../assets/img/favicons/android-chrome-192x192.png"
@@ -5,6 +6,8 @@ import logo from "../../assets/img/favicons/android-chrome-192x192.png"
 import styles from "./headerComp.module.scss"
 
 const HeaderComp = () => {
+	const [showMenuBar, setShowMenuBar] = useState(false)
+
 	return (
 		<header className={styles.header}>
 			<img src={logo} alt="horizon university logo" />
@@ -17,11 +20,16 @@ const HeaderComp = () => {
 					Sign-up
 				</NavLink>
 			</div>
-			<div className={styles.navToggler}>
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
+			<button
+				type="button"
+				onClick={() => setShowMenuBar(true)}
+				aria-label="Toggle menu navigation"
+				className={styles.navToggler}
+			>
+				<span className={showMenuBar ? "rotate-first" : ""}></span>
+				<span className={showMenuBar ? "rotate-second" : ""}></span>
+				<span className={showMenuBar ? "rotate-third" : ""}></span>
+			</button>
 		</header>
 	)
 }

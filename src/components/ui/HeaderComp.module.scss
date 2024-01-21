@@ -16,20 +16,27 @@
 	}
 
 	.navToggler {
-		background-color: grey;
-		height: 75px;
-		width: 75px;
+		height: 42px;
+		background-color: transparent;
+		width: 42px;
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
-		padding-top: 8px;
-		padding-bottom: 8px;
+		justify-content: space-evenly;
+		border: none;
+		cursor: pointer;
+		padding: 5px;
+		transition: background-color 180ms ease-in-out;
+
+		&:hover {
+			background-color: rgba(128, 128, 128, 0.158);
+		}
 
 		span {
 			background-color: white;
-			height: 8px;
+			height: 3px;
 			width: 100%;
 			display: block;
+			transition: all 150ms ease-in-out;
 		}
 	}
 
@@ -41,4 +48,16 @@
 			display: none;
 		}
 	}
+}
+
+.rotate-first {
+	transform: rotate(45deg) translate(6px, 6px);
+}
+
+.rotate-second {
+	transform: scale(0);
+}
+
+.rotate-third {
+	transform: rotate(-45deg) translate(6px, -6px);
 }
