@@ -8,4 +8,37 @@
 		max-width: 75px;
 		box-shadow: -1px 2px 3px -2px #ffffff54;
 	}
+
+	.logIn {
+		display: none;
+		justify-content: space-between;
+		width: 160px;
+	}
+
+	.navToggler {
+		background-color: grey;
+		height: 75px;
+		width: 75px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		padding-top: 8px;
+		padding-bottom: 8px;
+
+		span {
+			background-color: white;
+			height: 8px;
+			width: 100%;
+			display: block;
+		}
+	}
+
+	@media only screen and (min-width: 600px) {
+		.logIn {
+			display: flex;
+		}
+		.navToggler {
+			display: none;
+		}
+	}
 }

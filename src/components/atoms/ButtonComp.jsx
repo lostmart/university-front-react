@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 
 const ButtonComp = ({ btnText }) => {
-	return <button>{btnText}</button>
+	return <button className="btn">{btnText}</button>
 }
 
 ButtonComp.propTypes = {

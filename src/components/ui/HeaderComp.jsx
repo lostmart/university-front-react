@@ -9,10 +9,18 @@ const HeaderComp = () => {
 		<header className={styles.header}>
 			<img src={logo} alt="horizon university logo" />
 			<NavBar />
-			<div>
-				<NavLink to="/" className="btn">Login</NavLink>
-				<NavLink to="/">Sign-up</NavLink>
-
+			<div className={styles.logIn}>
+				<NavLink to="/" className="btn btn-primary-outline">
+					Login
+				</NavLink>
+				<NavLink to="/" className="btn btn-primary">
+					Sign-up
+				</NavLink>
+			</div>
+			<div className={styles.navToggler}>
+				<span></span>
+				<span></span>
+				<span></span>
 			</div>
 		</header>
 	)
