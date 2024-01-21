@@ -1,5 +1,6 @@
-import logo from "../../assets/img/favicons/android-chrome-192x192.png"
+import { NavLink } from "react-router-dom"
 import NavBar from "./NavBar"
+import logo from "../../assets/img/favicons/android-chrome-192x192.png"
 
 import styles from "./headerComp.module.scss"
 
@@ -9,8 +10,9 @@ const HeaderComp = () => {
 			<img src={logo} alt="horizon university logo" />
 			<NavBar />
 			<div>
-				<button>Login</button>
-				<button>Sign-up</button>
+				<NavLink to="/" className="btn">Login</NavLink>
+				<NavLink to="/">Sign-up</NavLink>
+
 			</div>
 		</header>
 	)
