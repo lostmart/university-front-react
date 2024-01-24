@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { NavLink } from "react-router-dom"
 import NavBar from "./NavBar"
-import logo from "../../assets/img/favicons/android-chrome-192x192.png"
+import logo from "../../assets/img/logo.png"
 
 import styles from "./HeaderComp.module.scss"
 import NavFull from "./NavFull"
