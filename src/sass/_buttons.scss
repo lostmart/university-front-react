@@ -53,4 +53,12 @@
 	color: $primary-color;
 	border: none;
 	box-shadow: inset -5px 3px 13px #333842, inset 4px -4px 8px #414854;
+
+	&:hover {
+		box-shadow: inset -2px 1px 4px #333842, inset 2px -3px 5px #414854;
+	}
 }
+
+// .btn-primary-outline:hover {
+
+// }
