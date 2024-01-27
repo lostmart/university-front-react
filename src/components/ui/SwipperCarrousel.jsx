@@ -17,7 +17,7 @@ import "swiper/css"
 import "swiper/css/navigation"
 
 // import required modules
-import { Navigation } from "swiper/modules"
+import { Autoplay, Navigation } from "swiper/modules"
 
 const SwipperCarrousel = () => {
 	const slides = [
@@ -58,6 +58,7 @@ const SwipperCarrousel = () => {
 			spaceBetween={20}
 			centeredSlides={true}
 			loop={true}
+			autoplay={{ delay: 2300 }}
 			pagination={{
 				clickable: true,
 			}}
@@ -68,7 +69,7 @@ const SwipperCarrousel = () => {
 				},
 			}}
 			navigation={true}
-			modules={[Navigation]}
+			modules={[Navigation, Autoplay]}
 			className="mySwiper"
 		>
 			{slides.map((slide, i) => {
