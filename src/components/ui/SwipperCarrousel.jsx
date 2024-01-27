@@ -62,13 +62,9 @@ const SwipperCarrousel = () => {
 				clickable: true,
 			}}
 			breakpoints={{
-				640: {
-					slidesPerView: 2,
+				620: {
+					slidesPerView: 1.5,
 					spaceBetween: 20,
-				},
-				1024: {
-					slidesPerView: 3,
-					spaceBetween: 50,
 				},
 			}}
 			navigation={true}

@@ -1,4 +1,15 @@
 .swiper-button-prev,
 .swiper-button-next {
 	display: none;
+	background: rgba(255, 255, 255, 0.201);
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	backdrop-filter: blur(5.4px);
+	-webkit-backdrop-filter: blur(5.4px);
+}
+
+@media only screen and (min-width: 600px) {
+	.swiper-button-prev,
+	.swiper-button-next {
+		display: flex;
+	}
 }
