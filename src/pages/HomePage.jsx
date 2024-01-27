@@ -1,9 +1,14 @@
+import TitleComp from "../components/atoms/TitleComp"
 import SwipperCarrousel from "../components/ui/SwipperCarrousel"
 
 const Home = () => {
 	return (
 		<>
-			<h2>home page</h2>
+			<TitleComp
+				titleText="Horizon University"
+				titleType="h1"
+				nameOfClass="mainTitle"
+			/>
 			<SwipperCarrousel />
 		</>
 	)
