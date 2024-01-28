@@ -47,3 +47,24 @@ body {
 .rotate-third {
 	transform: rotate(-45deg) translate(6px, -6px);
 }
+
+.swiper-button-prev,
+.swiper-button-next {
+	color: $primary-color;
+	width: calc(44px / 38 * 29);
+	height: 60px;
+	transition: color 0.3s ease-in-out;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+	color: $bg-color;
+}
+
+.swiper-slide {
+	transition: all 5s ease-in-out;
+}
+
+.swiper-slide-active figcaption {
+	transform: translate3d(0, 1%, 0) !important;
+}
