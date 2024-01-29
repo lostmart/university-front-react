@@ -62,9 +62,19 @@ body {
 }
 
 figcaption {
-	transition: transform 0.5s ease-in-out;
+	transition: transform 0.45s ease-out;
+}
+
+figcaption h2, figcaption p {
+	transition: opacity 1.2s ease-in-out;
+	margin-bottom: 10px;
+	opacity: 0;
 }
 
 .swiper-slide-active figcaption {
 	transform: translate3d(0, 1%, 0) !important;
+}
+
+.swiper-slide-active h2, .swiper-slide-active p {
+	opacity: 1;
 }
