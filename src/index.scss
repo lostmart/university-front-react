@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;700&display=swap");
 
 @import "./sass/variables";
 @import "./sass/buttons";
@@ -9,17 +9,21 @@
 	--bg-color: #3a404b;
 }
 
-
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Poppins', sans-serif;
+	font-family: "Poppins", sans-serif;
 }
 
 body {
 	background-color: var(--bg-color);
 	color: var(--font-color);
+}
+
+img {
+	display: block;
+	max-width: 100%;
 }
 
 .container {

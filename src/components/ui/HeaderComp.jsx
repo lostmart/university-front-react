@@ -11,7 +11,9 @@ const HeaderComp = () => {
 
 	return (
 		<header className={styles.header}>
-			<img src={logo} alt="horizon university logo" />
+			<NavLink to="/">
+				<img src={logo} alt="horizon university logo" />
+			</NavLink>
 			<NavBar />
 			<div className={styles.logIn}>
 				<NavLink
