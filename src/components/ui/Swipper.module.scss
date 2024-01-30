@@ -29,6 +29,12 @@
 			backdrop-filter: blur(5.4px);
 			-webkit-backdrop-filter: blur(5.4px);
 		}
+
+		div {
+			display: flex;
+			width: clamp(270px, 100%, 558px);
+			justify-content: flex-end;
+		}
 	}
 
 	.swiperImg {
@@ -38,4 +44,3 @@
 		margin: auto;
 	}
 }
-

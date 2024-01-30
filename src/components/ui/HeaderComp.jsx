@@ -15,13 +15,13 @@ const HeaderComp = () => {
 			<NavBar />
 			<div className={styles.logIn}>
 				<NavLink
-					to="/"
+					to="/logIn"
 					className="btn btn-primary-outline"
 					style={{ width: "82px" }}
 				>
 					Login
 				</NavLink>
-				<NavLink to="/" className="btn btn-primary">
+				<NavLink to="/signUp" className="btn btn-primary">
 					Sign-up
 				</NavLink>
 			</div>

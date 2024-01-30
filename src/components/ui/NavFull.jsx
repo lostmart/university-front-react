@@ -22,7 +22,7 @@ const NavFull = ({ showMenuBar }) => {
 				</li>
 				<li>
 					<NavLink
-						to="/"
+						to="/logIn"
 						className="btn btn-primary-outline"
 						style={{ width: "82px" }}
 					>
@@ -30,7 +30,7 @@ const NavFull = ({ showMenuBar }) => {
 					</NavLink>
 				</li>
 				<li>
-					<NavLink to="/" className="btn btn-primary">
+					<NavLink to="/signUp" className="btn btn-primary">
 						Sign-up
 					</NavLink>
 				</li>

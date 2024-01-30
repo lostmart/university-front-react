@@ -84,13 +84,15 @@ const SwipperCarrousel = () => {
 							<figcaption className={styles.caption}>
 								<h2>{slide.title}</h2>
 								<p>{slide.description}</p>
-								<NavLink
-									to="/"
-									className="btn btn-primary-outline"
-									style={{ width: "82px" }}
-								>
-									Login
-								</NavLink>
+								<div>
+									<NavLink
+										to="/"
+										className="btn btn-primary-outline"
+										style={{ width: "82px" }}
+									>
+										Login
+									</NavLink>
+								</div>
 							</figcaption>
 						</figure>
 					</SwiperSlide>
