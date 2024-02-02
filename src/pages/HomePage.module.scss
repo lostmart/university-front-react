@@ -1,0 +1,35 @@
+.homeSection {
+	display: flex;
+	flex-direction: column;
+
+	.titleStyle {
+		font-size: 50px;
+		letter-spacing: -0.05rem;
+		line-height: 1;
+		font-weight: 200;
+
+		.titleMuted {
+			color: #6c757d;
+			font-size: 46px;
+			font-weight: 400;
+		}
+	}
+
+	figure {
+		width: 100%;
+		padding: 10px;
+		max-height: 200px;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	@media only screen and (min-width: 600px) {
+		flex-direction: row;
+
+		figure {
+			max-height: 280px;
+		}
+	}
+}
