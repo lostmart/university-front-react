@@ -9,11 +9,6 @@ import grandImg2 from "../assets/img/grand-02.jpg"
 import grandImg3 from "../assets/img/grand-03.jpg"
 
 const Home = () => {
-	const paragraphStyle = {
-		fontSize: "1.25rem",
-		lineHeight: 1.5,
-		marginTop: "1em",
-	}
 	return (
 		<>
 			<TitleComp
@@ -29,7 +24,7 @@ const Home = () => {
 						First featurette heading.
 						<span className={styles.titleMuted}>It’ll blow your mind.</span>
 					</h2>
-					<p style={paragraphStyle}>
+					<p>
 						Some great placeholder content for the first featurette here.
 						Imagine some exciting prose here.
 					</p>
@@ -48,7 +43,7 @@ const Home = () => {
 						First featurette heading.
 						<span className={styles.titleMuted}>It’ll blow your mind.</span>
 					</h2>
-					<p style={paragraphStyle}>
+					<p>
 						Some great placeholder content for the first featurette here.
 						Imagine some exciting prose here.
 					</p>
@@ -61,7 +56,7 @@ const Home = () => {
 						First featurette heading.
 						<span className={styles.titleMuted}>It’ll blow your mind.</span>
 					</h2>
-					<p style={paragraphStyle}>
+					<p>
 						Some great placeholder content for the first featurette here.
 						Imagine some exciting prose here.
 					</p>
