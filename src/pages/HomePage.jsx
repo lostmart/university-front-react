@@ -1,6 +1,7 @@
 import HorizontalSeparator from "../components/atoms/HorizontalSeparator"
 import TitleComp from "../components/atoms/TitleComp"
 import SwipperCarrousel from "../components/ui/SwipperCarrousel"
+import { ReactLenis, useLenis } from "@studio-freight/react-lenis"
 
 import styles from "./HomePage.module.scss"
 
@@ -9,6 +10,11 @@ import grandImg2 from "../assets/img/grand-02.jpg"
 import grandImg3 from "../assets/img/grand-03.jpg"
 
 const Home = () => {
+	/*   scrolling stuff   */
+	const lenis = useLenis(({ scroll }) => {
+		// called every scroll
+	})
+
 	return (
 		<>
 			<TitleComp
