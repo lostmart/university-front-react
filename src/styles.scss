@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;700&display=swap");
+
+@import "./sass/variables";
+@import "./sass/buttons";
+@import "./sass/carouselExtra";
+
+:root {
+	--font-color: #f8f9fa;
+	--bg-color: #3a404b;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+}
+
+body {
+	background-color: var(--bg-color);
+	color: var(--font-color);
+}
+
+img {
+	display: block;
+	max-width: 100%;
+}
+
+.container {
+	width: clamp(360px, 100%, 980px);
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+}
+.mainTitle {
+	text-align: center;
+	font-weight: 400;
+}
