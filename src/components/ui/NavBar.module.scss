@@ -1,0 +1,21 @@
+@import "../../sass/variables";
+
+.navBar {
+	display: none;
+
+	ul {
+		list-style-type: none;
+		display: flex;
+		width: fit-content;
+		gap: 15px;
+	}
+
+	a {
+		text-decoration: none;
+		color: $font-color;
+	}
+
+	@media only screen and (min-width: 600px) {
+		display: flex;
+	}
+}

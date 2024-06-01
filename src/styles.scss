@@ -37,3 +37,16 @@ img {
 	text-align: center;
 	font-weight: 400;
 }
+
+// menu animations
+.rotate-first {
+	transform: rotate(45deg) translate(6px, 6px);
+}
+
+.rotate-second {
+	transform: scale(0);
+}
+
+.rotate-third {
+	transform: rotate(-45deg) translate(6px, -6px);
+}
