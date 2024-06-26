@@ -81,7 +81,7 @@ const SignUp = () => {
 				</div>
 
 				<button
-					className="w-100 btn btn-lg btn-primary submit my-3"
+					className="w-100 btn btn-lg btn-primary submit mt-3 mb-5"
 					type="submit"
 				>
 					Sign in

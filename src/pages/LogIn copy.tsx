@@ -1,6 +1,6 @@
-import { useRef, useState } from "react"
+import { useState, useRef } from "react"
 import ModalComp from "../components/ModalComp"
-import { useNavigate } from "react-router-dom"
+import "../signIn.scss"
 
 type TFormData = {
 	email: string
@@ -8,22 +8,19 @@ type TFormData = {
 	[key: string]: string // Index signature
 }
 
-type TFormError = {
-	message: string
-	[key: string]: string // Index signature
-}
+// type TFormError = {
+// 	type: string
+// 	message: string
+// 	[key: string]: string // Index signature
+// }
 
-const ParentComponent = (): JSX.Element => {
+const LogIn = () => {
 	const [formData, setFormData] = useState<TFormData>({
 		email: "",
 		password: "",
 	})
 
-	const [formError, setFormError] = useState<TFormError>({
-		message: "",
-	})
-
-	const navigate = useNavigate() // Initialize useNavigate
+	// const [formError, setFormError] = useState({})
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
@@ -33,27 +30,26 @@ const ParentComponent = (): JSX.Element => {
 		})
 	}
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		// Handle form submission in frontend ! 🙄❌
-		if (formData.email !== "test@test.net" || formData.password !== "123") {
-			setFormData({
-				...formData,
-				password: "",
-			})
-			setFormError({
-				message: "Password or email wrong !!",
-			})
-			openModal()
-		} else {
-			navigate("/profile")
-		}
-	}
-
-	const modalRef = useRef<{ show: () => void; hide: () => void } | null>(null)
+	const modalRef = useRef<any>(null)
 
 	const openModal = () => {
 		modalRef.current?.show()
+	}
+
+	const closeModal = () => {
+		modalRef.current?.hide()
+	}
+
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		// Handle form submission in frontend ! 🙄❌
+		console.log(formData)
+		if (formData.email !== "test@test.net" && formData.password !== "123") {
+			console.log("error !!!")
+			openModal()
+		} else {
+			console.log("you're good !!")
+		}
 	}
 
 	return (
@@ -67,6 +63,7 @@ const ParentComponent = (): JSX.Element => {
 				<h1 className="h3 mb-4 fw-normal">Please Log In</h1>
 
 				<div className="form-floating my-4">
+					<div className="invalid-feedback mb-2">nuncatemas</div>
 					<input
 						type="email"
 						className="form-control"
@@ -88,15 +85,16 @@ const ParentComponent = (): JSX.Element => {
 						value={formData.password}
 						onChange={handleChange}
 					/>
+					<label htmlFor="password">Password</label>
 				</div>
 
 				<button className="w-100 btn btn-lg btn-primary my-4" type="submit">
 					Sign in
 				</button>
 			</form>
-			<ModalComp ref={modalRef} message={formError.message} />
+			<ModalComp />
 		</main>
 	)
 }
 
-export default ParentComponent
+export default LogIn
