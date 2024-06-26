@@ -21,9 +21,10 @@ const HeaderComp = (): JSX.Element => {
 					</Link>
 				</li>
 				<li>
-					<Link to="./#features" className="nav-link px-2 link-light">
+					{/* review page link with animations  */}
+					<a href="/#features" className="nav-link px-2 link-light">
 						Features
-					</Link>
+					</a>
 				</li>
 				<li>
 					<Link to="/about" className="nav-link px-2 link-light">
