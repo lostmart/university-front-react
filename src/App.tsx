@@ -13,6 +13,8 @@ import "./styles.scss"
 import Home from "./pages/HomePage"
 import About from "./pages/AboutPage"
 import NotFound from "./pages/NotFound"
+import LogIn from "./pages/LogIn"
+import SignUp from "./pages/SignUp"
 
 function App() {
 	return (
@@ -23,6 +25,8 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/about" element={<About />} />
+				<Route path="/login" element={<LogIn />} />
+				<Route path="/signup" element={<SignUp />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 			<div className="container">

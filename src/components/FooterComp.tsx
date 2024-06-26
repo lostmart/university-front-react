@@ -10,7 +10,7 @@ const FooterComp = () => {
 			</p>
 			<p>
 				&copy; {year} Company, Inc. &middot;
-				<Link to="/">Privacy</Link>todd/t; <Link to="/">Terms</Link>
+				<Link to="/">Privacy</Link> | <Link to="/">Terms</Link>
 			</p>
 		</footer>
 	)
