@@ -1,8 +1,19 @@
+import { Link } from "react-router-dom"
+
 const NotFound = (): JSX.Element => {
 	return (
-		<div>
-			<h1>Not Found</h1>
-		</div>
+		<section
+			className="d-flex flex-column justify-content-center align-items-center"
+			style={{
+				minHeight: "86dvh",
+			}}
+		>
+			<h2>Not Found</h2>
+			<p>sorry...</p>
+			<Link to="/" className="btn btn-primary">
+				Go Back Home
+			</Link>
+		</section>
 	)
 }
 

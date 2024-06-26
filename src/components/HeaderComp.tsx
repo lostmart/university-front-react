@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom"
+
 const HeaderComp = (): JSX.Element => {
 	return (
 		<header className="header d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
-			<a
-				href="/"
+			<Link
+				to="/"
 				className="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-decoration-none"
 			>
 				<img
@@ -10,28 +12,33 @@ const HeaderComp = (): JSX.Element => {
 					alt="horizon university"
 					className="university_icon"
 				/>
-			</a>
+			</Link>
 
 			<ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 text-light">
 				<li>
-					<a href="#" className="nav-link px-2 link-light">
+					<Link to="/" className="nav-link px-2 link-light">
 						Home
-					</a>
+					</Link>
 				</li>
 				<li>
-					<a href="#features" className="nav-link px-2 link-light">
+					<Link to="./#features" className="nav-link px-2 link-light">
 						Features
-					</a>
+					</Link>
+				</li>
+				<li>
+					<Link to="/about" className="nav-link px-2 link-light">
+						About
+					</Link>
 				</li>
 			</ul>
 
 			<div className="col-md-3 text-end login-section">
-				<a href="./logIn.html" className="btn btn-outline-primary me-2">
+				<Link to="/logIn" className="btn btn-outline-primary me-2">
 					Login
-				</a>
-				<a href="./signUp.html" className="btn btn-primary">
+				</Link>
+				<Link to="/signUp" className="btn btn-primary">
 					Sign-up
-				</a>
+				</Link>
 			</div>
 		</header>
 	)
