@@ -1,12 +1,7 @@
-import React from "react"
-import TitleComp from "../components/atoms/TitleComp"
-
-const Home: React.FC = () => {
+const Home = (): JSX.Element => {
 	return (
 		<div>
-			<TitleComp>
-				<h1 className="mainTitle">Hello peoeple</h1>
-			</TitleComp>
+			<h1 className="mainTitle">Hello peoeple</h1>
 		</div>
 	)
 }
