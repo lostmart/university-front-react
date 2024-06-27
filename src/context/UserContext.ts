@@ -1,10 +1,12 @@
 import { createContext } from "react"
 
+
 export interface TAppContext {
-	userName: string | null
-	setUser: () => void
+	loggedIn: boolean
+	setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
 }
-export const AppContext = createContext<TAppContext | null>(null)
+
+export const LoginContext = createContext<TAppContext | null>(null)
 
 // checks user is not underfined | custom hook
 // export function useUserContext() {

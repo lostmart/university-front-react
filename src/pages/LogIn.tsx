@@ -2,6 +2,11 @@ import { useRef, useState } from "react"
 import ModalComp from "../components/ModalComp"
 import { useNavigate } from "react-router-dom"
 
+// context
+import { useContext } from "react"
+import { LoginContext } from "../context/UserContext"
+import { TAppContext } from "../context/UserContext"
+
 type TFormData = {
 	email: string
 	password: string
@@ -14,6 +19,8 @@ type TFormError = {
 }
 
 const ParentComponent = (): JSX.Element => {
+	const { setLoggedIn } = useContext<TAppContext>(LoginContext)
+
 	const [formData, setFormData] = useState<TFormData>({
 		email: "",
 		password: "",
@@ -47,6 +54,7 @@ const ParentComponent = (): JSX.Element => {
 			openModal()
 		} else {
 			navigate("/profile")
+			setLoggedIn(true)
 		}
 	}
 

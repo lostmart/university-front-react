@@ -1,15 +1,14 @@
 import { Link } from "react-router-dom"
-//import { useUserContext } from "../context/UserContext"
 import { useContext } from "react"
-import { LoginContext } from "../App"
+import { LoginContext } from "../context/UserContext"
+import { TAppContext } from "../context/UserContext"
 
 const HeaderComp = (): JSX.Element => {
-	const [loggedIn, setLoggedIn] = useContext(LoginContext)
-	console.log(loggedIn)
+	const { loggedIn } = useContext<TAppContext>(LoginContext)
 
 	return (
 		<header className="header d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
-			<button onClick={() => setLoggedIn(false)}>logout</button>
+			{/* <button onClick={() => setLoggedIn(!loggedIn)}>logout</button> */}
 			<Link
 				to="/"
 				className="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-decoration-none"

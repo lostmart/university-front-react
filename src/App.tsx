@@ -20,15 +20,13 @@ import ProfilePage from "./pages/ProfilePage"
 import { useState } from "react"
 
 // context
-import { createContext } from "react"
-
-export const LoginContext = createContext<any>(null)
+import { LoginContext } from "./context/UserContext"
 
 function App() {
-	const [loggedIn, setLoggedIn] = useState(true)
+	const [loggedIn, setLoggedIn] = useState(false)
 
 	return (
-		<LoginContext.Provider value={[loggedIn, setLoggedIn]}>
+		<LoginContext.Provider value={{ loggedIn, setLoggedIn }}>
 			<Router>
 				<div className="container">
 					<HeaderComp />
