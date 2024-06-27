@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import HeaderComp from "./components/HeaderComp"
 import FooterComp from "./components/FooterComp"
-import "./assets/css/bootstrap.min.css"
+import "./assets/css/bootstrap.min.css" // custom bootstrap css min
 import "bootstrap/dist/js/bootstrap.bundle.min"
 import "./assets/css/carousel.css"
 import "./assets/css/signUp.css"
@@ -17,25 +17,35 @@ import NotFound from "./pages/NotFound"
 import LogIn from "./pages/LogIn"
 import SignUp from "./pages/SignUp"
 import ProfilePage from "./pages/ProfilePage"
+import { useState } from "react"
+
+// context
+import { createContext } from "react"
+
+export const LoginContext = createContext<any>(null)
 
 function App() {
+	const [loggedIn, setLoggedIn] = useState(true)
+
 	return (
-		<Router>
-			<div className="container">
-				<HeaderComp />
-			</div>
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/about" element={<About />} />
-				<Route path="/login" element={<LogIn />} />
-				<Route path="/signup" element={<SignUp />} />
-				<Route path="/profile" element={<ProfilePage />} />
-				<Route path="*" element={<NotFound />} />
-			</Routes>
-			<div className="container">
-				<FooterComp />
-			</div>
-		</Router>
+		<LoginContext.Provider value={[loggedIn, setLoggedIn]}>
+			<Router>
+				<div className="container">
+					<HeaderComp />
+				</div>
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/about" element={<About />} />
+					<Route path="/login" element={<LogIn />} />
+					<Route path="/signup" element={<SignUp />} />
+					<Route path="/profile" element={<ProfilePage />} />
+					<Route path="*" element={<NotFound />} />
+				</Routes>
+				<div className="container">
+					<FooterComp />
+				</div>
+			</Router>
+		</LoginContext.Provider>
 	)
 }
 

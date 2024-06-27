@@ -1,8 +1,15 @@
 import { Link } from "react-router-dom"
+//import { useUserContext } from "../context/UserContext"
+import { useContext } from "react"
+import { LoginContext } from "../App"
 
 const HeaderComp = (): JSX.Element => {
+	const [loggedIn, setLoggedIn] = useContext(LoginContext)
+	console.log(loggedIn)
+
 	return (
 		<header className="header d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
+			<button onClick={() => setLoggedIn(false)}>logout</button>
 			<Link
 				to="/"
 				className="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-decoration-none"
@@ -32,15 +39,18 @@ const HeaderComp = (): JSX.Element => {
 					</Link>
 				</li>
 			</ul>
-
-			<div className="col-md-3 text-end login-section">
-				<Link to="/logIn" className="btn btn-outline-primary me-2">
-					Login
-				</Link>
-				<Link to="/signUp" className="btn btn-primary">
-					Sign-up
-				</Link>
-			</div>
+			{!loggedIn ? (
+				<div className="col-md-3 text-end login-section">
+					<Link to="/logIn" className="btn btn-outline-primary me-2">
+						Login
+					</Link>
+					<Link to="/signUp" className="btn btn-primary">
+						Sign-up
+					</Link>
+				</div>
+			) : (
+				<div>you 're all set !!</div>
+			)}
 		</header>
 	)
 }
