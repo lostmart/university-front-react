@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom"
 import { useContext } from "react"
-import { LoginContext } from "../context/UserContext"
-import { TAppContext } from "../context/UserContext"
+import { Link } from "react-router-dom"
+import { UserContext } from "../context/UserContext"
 
 const HeaderComp = (): JSX.Element => {
-	const { loggedIn } = useContext<TAppContext>(LoginContext)
+	const { user } = useContext(UserContext)
+	console.log(user.logged)
 
 	return (
 		<header className="header d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
@@ -38,18 +38,27 @@ const HeaderComp = (): JSX.Element => {
 					</Link>
 				</li>
 			</ul>
-			{!loggedIn ? (
-				<div className="col-md-3 text-end login-section">
-					<Link to="/logIn" className="btn btn-outline-primary me-2">
-						Login
+
+			<div className="col-md-3 text-end login-section">
+				{user.logged ? (
+					<Link to="/profile" className="btn btn-primary me-2 avatar-pic">
+						Profile
+						<img
+							src="https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="
+							alt="profile pic"
+						/>
 					</Link>
-					<Link to="/signUp" className="btn btn-primary">
-						Sign-up
-					</Link>
-				</div>
-			) : (
-				<div>you 're all set !!</div>
-			)}
+				) : (
+					<>
+						<Link to="/logIn" className="btn btn-outline-primary me-2">
+							Login
+						</Link>
+						<Link to="/signUp" className="btn btn-primary">
+							Sign-up
+						</Link>
+					</>
+				)}
+			</div>
 		</header>
 	)
 }

@@ -1,11 +1,5 @@
 import { useRef, useState } from "react"
 import ModalComp from "../components/ModalComp"
-import { useNavigate } from "react-router-dom"
-
-// context
-import { useContext } from "react"
-import { LoginContext } from "../context/UserContext"
-import { TAppContext } from "../context/UserContext"
 
 type TFormData = {
 	email: string
@@ -13,24 +7,22 @@ type TFormData = {
 	[key: string]: string // Index signature
 }
 
-type TFormError = {
-	message: string
-	[key: string]: string // Index signature
-}
+// type TFormError = {
+// 	message: string
+// 	[key: string]: string // Index signature
+// }
 
 const ParentComponent = (): JSX.Element => {
-	const { setLoggedIn } = useContext<TAppContext>(LoginContext)
-
 	const [formData, setFormData] = useState<TFormData>({
 		email: "",
 		password: "",
 	})
 
-	const [formError, setFormError] = useState<TFormError>({
-		message: "",
-	})
+	// const [formError, setFormError] = useState<TFormError>({
+	// 	message: "",
+	// })
 
-	const navigate = useNavigate() // Initialize useNavigate
+	// const navigate = useNavigate() // Initialize useNavigate
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
@@ -40,33 +32,33 @@ const ParentComponent = (): JSX.Element => {
 		})
 	}
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		// Handle form submission in frontend ! 🙄❌
-		if (formData.email !== "test@test.net" || formData.password !== "123") {
-			setFormData({
-				...formData,
-				password: "",
-			})
-			setFormError({
-				message: "Password or email wrong !!",
-			})
-			openModal()
-		} else {
-			navigate("/profile")
-			setLoggedIn(true)
-		}
-	}
+	// const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+	// 	e.preventDefault()
+	// 	// Handle form submission in frontend ! 🙄❌
+	// 	if (formData.email !== "test@test.net" || formData.password !== "123") {
+	// 		setFormData({
+	// 			...formData,
+	// 			password: "",
+	// 		})
+	// 		setFormError({
+	// 			message: "Password or email wrong !!",
+	// 		})
+	// 		openModal()
+	// 	} else {
+	// 		navigate("/profile")
+	// 		setLoggedIn(true)
+	// 	}
+	// }
 
 	const modalRef = useRef<{ show: () => void; hide: () => void } | null>(null)
 
-	const openModal = () => {
-		modalRef.current?.show()
-	}
+	// const openModal = () => {
+	// 	modalRef.current?.show()
+	// }
 
 	return (
 		<main className="container text-center m-auto form-signin">
-			<form style={{ minHeight: "85dvh" }} onSubmit={handleSubmit}>
+			<form style={{ minHeight: "85dvh" }} onSubmit={() => {}}>
 				<img
 					className="mb-4"
 					src="./img/favicons/android-chrome-192x192.png"
@@ -76,10 +68,10 @@ const ParentComponent = (): JSX.Element => {
 
 				<div className="form-floating my-4">
 					<input
-						type="email"
+						type="text"
 						className="form-control"
-						placeholder="name@example.com"
-						name="email"
+						placeholder="User Name"
+						name="username"
 						required
 						value={formData.email}
 						onChange={handleChange}
@@ -102,7 +94,7 @@ const ParentComponent = (): JSX.Element => {
 					Sign in
 				</button>
 			</form>
-			<ModalComp ref={modalRef} message={formError.message} />
+			<ModalComp ref={modalRef} message={""} />
 		</main>
 	)
 }

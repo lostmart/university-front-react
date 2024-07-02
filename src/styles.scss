@@ -72,3 +72,16 @@ img {
 .form-signin img {
 	max-width: 150px;
 }
+
+/*  avatar */
+.avatar-pic {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	max-width: 135px;
+}
+
+.avatar-pic > img {
+	width: 40px;
+	border-radius: 50%;
+}

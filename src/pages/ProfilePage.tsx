@@ -1,20 +1,16 @@
-import { useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
-// context
-import { LoginContext } from "../context/UserContext"
-import { TAppContext } from "../context/UserContext"
+
 
 const ProfilePage = () => {
-	const navigate = useNavigate()
+	// const navigate = useNavigate()
 
-	const { loggedIn, setLoggedIn } = useContext<TAppContext>(LoginContext)
 
-	useEffect(() => {
-		if (!loggedIn) {
-			navigate("/")
-		}
-	}, [loggedIn, navigate])
+	// useEffect(() => {
+	// 	if (!loggedIn) {
+	// 		navigate("/")
+	// 	}
+	// }, [loggedIn, navigate])
 
 	return (
 		<main className="container">

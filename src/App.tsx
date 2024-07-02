@@ -17,16 +17,13 @@ import NotFound from "./pages/NotFound"
 import LogIn from "./pages/LogIn"
 import SignUp from "./pages/SignUp"
 import ProfilePage from "./pages/ProfilePage"
-import { useState } from "react"
 
-// context
-import { LoginContext } from "./context/UserContext"
+// contextProvider
+import UserProvider from "./context/UserContext"
 
 function App() {
-	const [loggedIn, setLoggedIn] = useState(false)
-
 	return (
-		<LoginContext.Provider value={{ loggedIn, setLoggedIn }}>
+		<UserProvider>
 			<Router>
 				<div className="container">
 					<HeaderComp />
@@ -43,7 +40,7 @@ function App() {
 					<FooterComp />
 				</div>
 			</Router>
-		</LoginContext.Provider>
+		</UserProvider>
 	)
 }
 
