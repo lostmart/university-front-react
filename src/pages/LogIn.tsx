@@ -1,28 +1,21 @@
-import { useRef, useState } from "react"
+import { useContext, useRef, useState } from "react"
 import ModalComp from "../components/ModalComp"
-
-type TFormData = {
-	email: string
-	password: string
-	[key: string]: string // Index signature
-}
-
-// type TFormError = {
-// 	message: string
-// 	[key: string]: string // Index signature
-// }
+import { useNavigate } from "react-router-dom"
+import { TFormData } from "../types/FormData"
+import { TFormError } from "../types/FormError"
+import { UserContext } from "../context/UserContext"
 
 const ParentComponent = (): JSX.Element => {
 	const [formData, setFormData] = useState<TFormData>({
-		email: "",
+		username: "",
 		password: "",
 	})
 
-	// const [formError, setFormError] = useState<TFormError>({
-	// 	message: "",
-	// })
+	const { setUser } = useContext(UserContext)
 
-	// const navigate = useNavigate() // Initialize useNavigate
+	const [formError, setFormError] = useState<TFormError | null>(null)
+
+	const navigate = useNavigate() // Initialize useNavigate
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
@@ -32,33 +25,61 @@ const ParentComponent = (): JSX.Element => {
 		})
 	}
 
-	// const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-	// 	e.preventDefault()
-	// 	// Handle form submission in frontend ! 🙄❌
-	// 	if (formData.email !== "test@test.net" || formData.password !== "123") {
-	// 		setFormData({
-	// 			...formData,
-	// 			password: "",
-	// 		})
-	// 		setFormError({
-	// 			message: "Password or email wrong !!",
-	// 		})
-	// 		openModal()
-	// 	} else {
-	// 		navigate("/profile")
-	// 		setLoggedIn(true)
-	// 	}
-	// }
+	// emilys
+	// emilyspass
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		// test empty
+		if (formData.username.trim() === "" || formData.password.trim() === "") {
+			return false
+		}
+		try {
+			const API_ENDPOINT = "https://dummyjson.com/auth/login"
+			const res = await fetch(API_ENDPOINT, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					username: formData.username,
+					password: formData.password,
+					expiresInMins: 30,
+				}),
+			})
+			// if (res.ok) {
+			// 	console.log(res, "all good !!")
+			// }
+			const data = await res.json()
+
+			// handle error
+			if (data.message === "Invalid credentials") {
+				const { message } = data
+				setFormError((prev) => ({
+					...prev,
+					message,
+				}))
+				openModal()
+				return
+			}
+			// if no errors navigate and setUser in Context
+			navigate("/profile")
+			console.log(data)
+			setUser((prev) => ({
+				...prev,
+				...data,
+			}))
+		} catch (error) {
+			console.log(error, "no no!")
+		}
+	}
 
 	const modalRef = useRef<{ show: () => void; hide: () => void } | null>(null)
 
-	// const openModal = () => {
-	// 	modalRef.current?.show()
-	// }
+	const openModal = () => {
+		modalRef.current?.show()
+	}
 
 	return (
 		<main className="container text-center m-auto form-signin">
-			<form style={{ minHeight: "85dvh" }} onSubmit={() => {}}>
+			<form style={{ minHeight: "85dvh" }} onSubmit={handleSubmit}>
 				<img
 					className="mb-4"
 					src="./img/favicons/android-chrome-192x192.png"
@@ -72,29 +93,40 @@ const ParentComponent = (): JSX.Element => {
 						className="form-control"
 						placeholder="User Name"
 						name="username"
-						required
+						id="username"
 						value={formData.email}
 						onChange={handleChange}
 					/>
-					<label htmlFor="email">Email address</label>
+					<label htmlFor="username">User Name</label>
 				</div>
 				<div className="form-floating my-4">
 					<input
 						type="password"
 						className="form-control"
 						placeholder="Password"
-						required
+						id="password"
 						name="password"
 						value={formData.password}
 						onChange={handleChange}
 					/>
+					<label htmlFor="password">Password</label>
 				</div>
 
 				<button className="w-100 btn btn-lg btn-primary my-4" type="submit">
 					Sign in
 				</button>
 			</form>
-			<ModalComp ref={modalRef} message={""} />
+			<ModalComp
+				ref={modalRef}
+				message={formError?.message ? formError.message : ""}
+				onClick={() => {
+					setFormError(null)
+					setFormData((prev) => ({
+						...prev,
+						password: "",
+					}))
+				}}
+			/>
 		</main>
 	)
 }

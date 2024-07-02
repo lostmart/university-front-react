@@ -3,9 +3,11 @@ import { Modal } from "bootstrap"
 
 type TModalComp = {
 	message: string
+	onClick?: () => void
 }
 
 const ModalComp = forwardRef((props: TModalComp, ref) => {
+	const { onClick } = props
 	const modalRef = useRef<HTMLDivElement>(null)
 
 	useImperativeHandle(ref, () => ({
@@ -24,8 +26,10 @@ const ModalComp = forwardRef((props: TModalComp, ref) => {
 	}))
 
 	return (
-		<>
-			<main className="container text-center m-auto form-signin"></main>
+		<main
+			onClick={onClick}
+			className="container text-center m-auto form-signin"
+		>
 			<div
 				className="modal fade"
 				id="exampleModal"
@@ -57,6 +61,7 @@ const ModalComp = forwardRef((props: TModalComp, ref) => {
 								type="button"
 								className="btn btn-secondary"
 								data-bs-dismiss="modal"
+								onClick={onClick}
 							>
 								Close
 							</button>
@@ -64,7 +69,7 @@ const ModalComp = forwardRef((props: TModalComp, ref) => {
 					</div>
 				</div>
 			</div>
-		</>
+		</main>
 	)
 })
 

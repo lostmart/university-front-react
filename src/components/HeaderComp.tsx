@@ -4,7 +4,6 @@ import { UserContext } from "../context/UserContext"
 
 const HeaderComp = (): JSX.Element => {
 	const { user } = useContext(UserContext)
-	console.log(user.logged)
 
 	return (
 		<header className="header d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">

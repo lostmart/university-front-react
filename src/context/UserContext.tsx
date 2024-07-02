@@ -1,14 +1,9 @@
 import { createContext, useState, ReactNode, Dispatch } from "react"
+import { TFullUser } from "../types/User"
 
 export interface TAppContext {
 	loggedIn: boolean
 	setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-type TFullUser = {
-	userName: string
-	userImage: string
-	logged: boolean
 }
 
 interface AppProviderProps {
@@ -24,8 +19,7 @@ export const LoginContext = createContext<TAppContext | null>(null)
 
 // empty valued user
 const initialUser = {
-	userName: "Guest",
-	userImage: "",
+	username: "Guest",
 	logged: false,
 }
 
