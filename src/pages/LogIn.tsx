@@ -65,6 +65,7 @@ const ParentComponent = (): JSX.Element => {
 			setUser((prev) => ({
 				...prev,
 				...data,
+				logged: true,
 			}))
 		} catch (error) {
 			console.log(error, "no no!")

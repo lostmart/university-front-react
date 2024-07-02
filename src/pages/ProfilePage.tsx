@@ -1,10 +1,17 @@
 import { useNavigate } from "react-router-dom"
-
-
+import { useContext } from "react"
+import { UserContext } from "../context/UserContext"
 
 const ProfilePage = () => {
-	// const navigate = useNavigate()
+	const navigate = useNavigate()
 
+	// empty valued user
+	const initialUser = {
+		username: "Guest",
+		logged: false,
+	}
+
+	const { setUser } = useContext(UserContext)
 
 	// useEffect(() => {
 	// 	if (!loggedIn) {
@@ -18,7 +25,8 @@ const ProfilePage = () => {
 			<button
 				className="btn btn-primary"
 				onClick={() => {
-					return setLoggedIn(false)
+					navigate("/")
+					return setUser(initialUser)
 				}}
 			>
 				log out
