@@ -56,17 +56,21 @@ const ParentComponent = (): JSX.Element => {
 					...prev,
 					message,
 				}))
+
 				openModal()
 				return
 			}
 			// if no errors navigate and setUser in Context
+			const { token } = data;
+  			sessionStorage.setItem('token', token);
 			navigate("/profile")
-			console.log(data)
+			// console.log(data)
 			setUser((prev) => ({
 				...prev,
 				...data,
 				logged: true,
 			}))
+
 		} catch (error) {
 			console.log(error, "no no!")
 		}

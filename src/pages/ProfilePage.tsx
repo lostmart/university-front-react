@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { UserContext } from "../context/UserContext"
 
 const ProfilePage = () => {
@@ -11,13 +11,13 @@ const ProfilePage = () => {
 		logged: false,
 	}
 
-	const { setUser } = useContext(UserContext)
+	const { user, setUser } = useContext(UserContext)
 
-	// useEffect(() => {
-	// 	if (!loggedIn) {
-	// 		navigate("/")
-	// 	}
-	// }, [loggedIn, navigate])
+	useEffect(() => {
+		if (!user.logged) {
+			navigate("/")
+		}
+	}, [user, navigate])
 
 	return (
 		<main className="container">
