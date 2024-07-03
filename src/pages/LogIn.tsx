@@ -60,12 +60,17 @@ const ParentComponent = (): JSX.Element => {
 					expiresInMins: 30,
 				}),
 			})
-			// if (res.ok) {
-			// 	console.log(res, "all good !!")
-			// }
+
 			const data = await res.json()
 
 			// handle error
+			if (!res.ok) {
+				setFormError((prev) => ({
+					...prev,
+					error: true,
+					status: res.status,
+				}))
+			}
 			if (data.message === "Invalid credentials") {
 				const { message } = data
 				setFormError((prev) => ({
