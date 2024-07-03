@@ -5,6 +5,22 @@ import { TFormData } from "../types/FormData"
 import { TFormError } from "../types/FormError"
 import { UserContext } from "../context/UserContext"
 
+const getErrorMessage = (error: unknown): string => {
+	let message: string
+
+	if (error instanceof Error) {
+		message = error.message
+	} else if (error && typeof error === "object" && "message" in error) {
+		message = String(error.message)
+	} else if (typeof error === "string") {
+		message = error
+	} else {
+		message = "Unknown Error...git status"
+	}
+
+	return message
+}
+
 const ParentComponent = (): JSX.Element => {
 	const [formData, setFormData] = useState<TFormData>({
 		username: "",
@@ -61,8 +77,8 @@ const ParentComponent = (): JSX.Element => {
 				return
 			}
 			// if no errors navigate and setUser in Context
-			const { token } = data;
-  			sessionStorage.setItem('token', token);
+			const { token } = data
+			sessionStorage.setItem("token", token)
 			navigate("/profile")
 			// console.log(data)
 			setUser((prev) => ({
@@ -70,9 +86,11 @@ const ParentComponent = (): JSX.Element => {
 				...data,
 				logged: true,
 			}))
-
 		} catch (error) {
 			console.log(error, "no no!")
+			return {
+				error: getErrorMessage(error),
+			}
 		}
 	}
 
