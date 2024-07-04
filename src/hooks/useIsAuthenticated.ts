@@ -18,7 +18,13 @@ const getErrorMessage = (error: unknown): string => {
 	return message
 }
 
-const authUser = async (token: string): Promise<TFullUser | Error> => {
+type UserError = {
+	message: string
+	name?: string
+	expiredAt?: string
+}
+
+const authUser = async (token: string): Promise<TFullUser | UserError> => {
 	const API_AUTH_USER = "https://dummyjson.com/user/me"
 
 	try {
@@ -32,7 +38,9 @@ const authUser = async (token: string): Promise<TFullUser | Error> => {
 		return userData
 	} catch (error) {
 		console.log(error)
-		return new Error(getErrorMessage(error))
+		return {
+			message: getErrorMessage(error),
+		}
 	}
 }
 
@@ -48,16 +56,27 @@ export const useIsAuthenticated = () => {
 			return false
 		} else {
 			const user = await authUser(token)
-
-			if (!(user instanceof Error)) {
-				console.log(user)
+			// error handling
+			if (typeof user === "object" && "message" in user) {
+				// case token bot valid
+				setUser((prev) => ({
+					...prev,
+					logged: false,
+				}))
+			} else {
+				/// valid token in session
+				const { username, firstName, image, lastName, id } = user
 
 				setUser((prev) => ({
 					...prev,
-					//...user,
+					username,
+					firstName,
+					image,
+					lastName,
+					id,
+
 					logged: true,
 				}))
-			} else {
 				return false
 			}
 		}
