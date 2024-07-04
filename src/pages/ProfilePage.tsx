@@ -26,6 +26,7 @@ const ProfilePage = () => {
 				className="btn btn-primary"
 				onClick={() => {
 					navigate("/")
+					sessionStorage.clear()
 					return setUser(initialUser)
 				}}
 			>
