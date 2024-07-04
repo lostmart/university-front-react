@@ -88,3 +88,34 @@ img {
 	width: 40px;
 	border-radius: 50%;
 }
+
+.pass-cont > span svg:last-child {
+	position: absolute;
+}
+
+.pass-cont > span {
+	background-color: #333741;
+	width: 46px;
+	height: 58px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	top: 0;
+	right: 0;
+	border-radius: 0 0.375rem 0.375rem 0;
+	border: 1px solid #333741;
+}
+
+.pass-cont > span:hover {
+	background-color: #2a2f36;
+}
+
+// .pass-cont > span:hover svg {
+// 	fill: #ffffff03;
+// }
+
+.pass-cont svg {
+	fill: rgba(255, 255, 255, 0.87);
+	width: 25px;
+}

@@ -3,7 +3,10 @@ import { Link } from "react-router-dom"
 import boyImg from "../assets/img/boy-student-2.webp"
 import girlImg from "../assets/img/girl-student.webp"
 
+import { useIsAuthenticated } from "../hooks/useIsAuthenticated"
+
 const About: React.FC = () => {
+	useIsAuthenticated()
 	return (
 		<main className="container">
 			<h1 className="m-4">About Page</h1>

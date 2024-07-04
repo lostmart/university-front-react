@@ -19,6 +19,7 @@ import LogIn from "./pages/LogIn"
 import SignUp from "./pages/SignUp"
 import ProfilePage from "./pages/ProfilePage"
 
+
 // Auth
 //import { isAuthenticated } from "./utils/Auth"
 
@@ -67,6 +68,7 @@ import UserProvider from "./context/UserContext"
 // }
 
 function App() {
+
 	// const { user, setUser } = useContext(UserContext)
 
 	// const isAuthenticated = async () => {

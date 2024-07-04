@@ -5,6 +5,9 @@ import { TFormData } from "../types/FormData"
 import { TFormError } from "../types/FormError"
 import { UserContext } from "../context/UserContext"
 
+import LittlEye from "../components/LittlEye"
+import EyeClose from "../components/EyeClose"
+
 const getErrorMessage = (error: unknown): string => {
 	let message: string
 
@@ -30,6 +33,8 @@ const ParentComponent = (): JSX.Element => {
 	const { setUser } = useContext(UserContext)
 
 	const [formError, setFormError] = useState<TFormError | null>(null)
+
+	const [hidePass, setHidePass] = useState(true)
 
 	const navigate = useNavigate() // Initialize useNavigate
 
@@ -127,9 +132,9 @@ const ParentComponent = (): JSX.Element => {
 					/>
 					<label htmlFor="username">User Name</label>
 				</div>
-				<div className="form-floating my-4">
+				<div className="form-floating my-4 pass-cont">
 					<input
-						type="password"
+						type={hidePass ? "password" : "text"}
 						className="form-control"
 						placeholder="Password"
 						id="password"
@@ -138,6 +143,9 @@ const ParentComponent = (): JSX.Element => {
 						onChange={handleChange}
 					/>
 					<label htmlFor="password">Password</label>
+					<span onMouseDown={() => setHidePass(!hidePass)}>
+						{hidePass ? <EyeClose /> : <LittlEye />}
+					</span>
 				</div>
 
 				<button className="w-100 btn btn-lg btn-primary my-4" type="submit">
