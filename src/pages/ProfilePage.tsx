@@ -27,37 +27,41 @@ const ProfilePage = () => {
 		<main className="container">
 			<section className="profile_section p-4">
 				<h2>Profile page</h2>
-				<div className="row">
-					<article className="col-sm-6 position-relative my-5 text-center rounded-2">
-						{user && (
-							<>
-								<img
-									className="profile-pic"
-									src={user.image}
-									alt={user.username}
-								/>
-								<h3 style={{ marginTop: "100px" }}>
-									{user.firstName} {user.lastName}
-								</h3>
-								<p> {user.username}</p>
-							</>
-						)}
-					</article>
-					<article className="col-sm-4 rounded-2">
-						<h3>Courses</h3>
-					</article>
+				<div className="row g-4 pt-4">
+					<div className="col-md-6 position-relative text-center">
+						<article className="p-3 mt-4 rounded-2">
+							{user && (
+								<>
+									<img
+										className="profile-pic"
+										src={user.image}
+										alt={user.username}
+									/>
+									<h3 style={{ marginTop: "100px" }}>
+										{user.firstName} {user.lastName}
+									</h3>
+									<p> {user.username}</p>
+								</>
+							)}
+							<button
+								className="btn btn-outline-primary mt-4"
+								onClick={() => {
+									navigate("/")
+									sessionStorage.clear()
+									return setUser(initialUser)
+								}}
+							>
+								log out
+							</button>
+						</article>
+					</div>
+					<div className="col-md-6">
+						<article className="p-3 mt-md-4 rounded-2">
+							<h3>Courses</h3>
+						</article>
+					</div>
 				</div>
 			</section>
-			<button
-				className="btn btn-primary"
-				onClick={() => {
-					navigate("/")
-					sessionStorage.clear()
-					return setUser(initialUser)
-				}}
-			>
-				log out
-			</button>
 		</main>
 	)
 }
