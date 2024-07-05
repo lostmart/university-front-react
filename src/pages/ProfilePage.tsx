@@ -25,16 +25,29 @@ const ProfilePage = () => {
 
 	return (
 		<main className="container">
-			<h2>Profile page</h2>
-			{user && (
-				<section>
-					<h3>
-						{user.firstName} {user.lastName}
-					</h3>
-					<img src={user.image} alt={user.username} />
-					<p> {user.username}</p>
-				</section>
-			)}
+			<section className="profile_section p-4">
+				<h2>Profile page</h2>
+				<div className="row">
+					<article className="col-sm-6 position-relative my-5 text-center rounded-2">
+						{user && (
+							<>
+								<img
+									className="profile-pic"
+									src={user.image}
+									alt={user.username}
+								/>
+								<h3 style={{ marginTop: "100px" }}>
+									{user.firstName} {user.lastName}
+								</h3>
+								<p> {user.username}</p>
+							</>
+						)}
+					</article>
+					<article className="col-sm-4 rounded-2">
+						<h3>Courses</h3>
+					</article>
+				</div>
+			</section>
 			<button
 				className="btn btn-primary"
 				onClick={() => {
