@@ -58,6 +58,35 @@ const ProfilePage = () => {
 					<div className="col-md-6">
 						<article className="p-3 mt-md-4 rounded-2">
 							<h3>Courses</h3>
+							{/* <div className="spinner-border text-light" role="status">
+								<span className="visually-hidden">Loading...</span>
+							</div> */}
+							<table className="table text-bg-dark">
+								<thead>
+									<tr>
+										<th scope="col">Year</th>
+										<th scope="col">Subject</th>
+										<th scope="col">Credits</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th scope="row">Freshman</th>
+										<td>Math</td>
+										<td>14</td>
+									</tr>
+									<tr>
+										<th scope="row">Freshman</th>
+										<td>Science</td>
+										<td>32</td>
+									</tr>
+									<tr>
+										<th scope="row">Freshman</th>
+										<td>Biology</td>
+										<td>12</td>
+									</tr>
+								</tbody>
+							</table>
 						</article>
 					</div>
 				</div>
