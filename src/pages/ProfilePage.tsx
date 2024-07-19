@@ -3,6 +3,7 @@ import { useContext, useEffect } from "react"
 import { UserContext } from "../context/UserContext"
 
 import { useIsAuthenticated } from "../hooks/useIsAuthenticated"
+import { Link } from "react-router-dom"
 
 const ProfilePage = () => {
 	useIsAuthenticated()
@@ -87,6 +88,33 @@ const ProfilePage = () => {
 									</tr>
 								</tbody>
 							</table>
+						</article>
+					</div>
+				</div>
+				<div className="row g-4 pt-4">
+					<div className="col-md-6">
+						<article className="p-3 rounded-2">
+							<h3>Contacts</h3>
+							<div className="list-group list-group-flush">
+								<Link
+									to="/contact/123"
+									className="list-group-item list-group-item-action text-bg-dark d-flex justify-content-between align-items-center"
+									aria-current="true"
+								>
+									UserName
+									<img
+										src="https://dummyjson.com/icon/sophiab/128"
+										alt=""
+										className="friends-avatar"
+									/>
+								</Link>
+								<a
+									href="#"
+									className="list-group-item list-group-item-action text-bg-dark"
+								>
+									A second link item
+								</a>
+							</div>
 						</article>
 					</div>
 				</div>

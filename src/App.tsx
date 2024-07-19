@@ -18,7 +18,7 @@ import NotFound from "./pages/NotFound"
 import LogIn from "./pages/LogIn"
 import SignUp from "./pages/SignUp"
 import ProfilePage from "./pages/ProfilePage"
-
+import ContactPage from "./pages/ContactPage"
 
 // Auth
 //import { isAuthenticated } from "./utils/Auth"
@@ -68,7 +68,6 @@ import UserProvider from "./context/UserContext"
 // }
 
 function App() {
-
 	// const { user, setUser } = useContext(UserContext)
 
 	// const isAuthenticated = async () => {
@@ -107,6 +106,7 @@ function App() {
 					<Route path="/login" element={<LogIn />} />
 					<Route path="/signup" element={<SignUp />} />
 					<Route path="/profile" element={<ProfilePage />} />
+					<Route path="/contact/:id" element={<ContactPage />} />
 					<Route path="*" element={<NotFound />} />
 				</Routes>
 				<div className="container">

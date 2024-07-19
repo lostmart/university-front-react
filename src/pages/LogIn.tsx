@@ -18,7 +18,7 @@ const getErrorMessage = (error: unknown): string => {
 	} else if (typeof error === "string") {
 		message = error
 	} else {
-		message = "Unknown Error...git status"
+		message = "Unknown Error... LogIn error"
 	}
 
 	return message
