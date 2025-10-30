@@ -1,7 +1,60 @@
-// src/services/authService.js
+// src/services/authService.ts
 
 const API_BASE_URL = "https://auth-microservice-ywe0.onrender.com/api/v1"
-const API_KEY = import.meta.env.VITE_API_KEY // Add this to your .env file
+const API_KEY = import.meta.env.VITE_API_KEY
+
+// Types
+interface UserData {
+	email: string
+	password: string
+	userName: string
+	role?: string
+}
+
+interface LoginCredentials {
+	email: string
+	password: string
+}
+
+interface User {
+	id: string
+	email: string
+	name: string
+	role: string
+	createdAt?: string
+	updatedAt?: string
+}
+
+interface AuthResponse {
+	success: boolean
+	data?: any
+	message?: string
+}
+
+interface LoginResponse extends AuthResponse {
+	data?: {
+		token: string
+		user: User
+	}
+}
+
+interface RegisterResponse extends AuthResponse {
+	data?: {
+		token: string
+		user: User
+	}
+}
+
+interface UserResponse extends AuthResponse {
+	data?: User
+}
+
+interface HealthResponse extends AuthResponse {
+	data?: {
+		status: string
+		timestamp: string
+	}
+}
 
 /**
  * Authentication Service
@@ -11,10 +64,10 @@ class AuthService {
 	/**
 	 * Get common headers including API key
 	 * @param {boolean} includeAuth - Whether to include JWT token
-	 * @returns {Object} Headers object
+	 * @returns {HeadersInit} Headers object
 	 */
-	getHeaders(includeAuth = false) {
-		const headers = {
+	private getHeaders(includeAuth: boolean = false): HeadersInit {
+		const headers: Record<string, string> = {
 			"Content-Type": "application/json",
 			"X-API-Key": API_KEY,
 		}
@@ -31,14 +84,10 @@ class AuthService {
 
 	/**
 	 * Register a new user
-	 * @param {Object} userData - User registration data
-	 * @param {string} userData.email - User email
-	 * @param {string} userData.password - User password
-	 * @param {string} userData.userName - User name
-	 * @param {string} [userData.role] - User role (optional, defaults to 'customer')
-	 * @returns {Promise<Object>} Registration response
+	 * @param {UserData} userData - User registration data
+	 * @returns {Promise<RegisterResponse>} Registration response
 	 */
-	async register(userData) {
+	async register(userData: UserData): Promise<RegisterResponse> {
 		try {
 			const response = await fetch(`${API_BASE_URL}/auth/register`, {
 				method: "POST",
@@ -47,7 +96,7 @@ class AuthService {
 					email: userData.email,
 					password: userData.password,
 					name: userData.userName,
-					role: userData.role || "customer", // Default to customer role
+					role: userData.role || "customer",
 				}),
 			})
 
@@ -72,19 +121,20 @@ class AuthService {
 			console.error("Registration error:", error)
 			return {
 				success: false,
-				message: error.message || "Registration failed. Please try again.",
+				message:
+					error instanceof Error
+						? error.message
+						: "Registration failed. Please try again.",
 			}
 		}
 	}
 
 	/**
 	 * Login user
-	 * @param {Object} credentials - Login credentials
-	 * @param {string} credentials.email - User email
-	 * @param {string} credentials.password - User password
-	 * @returns {Promise<Object>} Login response
+	 * @param {LoginCredentials} credentials - Login credentials
+	 * @returns {Promise<LoginResponse>} Login response
 	 */
-	async login(credentials) {
+	async login(credentials: LoginCredentials): Promise<LoginResponse> {
 		try {
 			const response = await fetch(`${API_BASE_URL}/auth/login`, {
 				method: "POST",
@@ -117,16 +167,18 @@ class AuthService {
 			return {
 				success: false,
 				message:
-					error.message || "Login failed. Please check your credentials.",
+					error instanceof Error
+						? error.message
+						: "Login failed. Please check your credentials.",
 			}
 		}
 	}
 
 	/**
 	 * Get current user profile
-	 * @returns {Promise<Object>} User profile data
+	 * @returns {Promise<UserResponse>} User profile data
 	 */
-	async getCurrentUser() {
+	async getCurrentUser(): Promise<UserResponse> {
 		try {
 			const response = await fetch(`${API_BASE_URL}/auth/me`, {
 				method: "GET",
@@ -150,17 +202,18 @@ class AuthService {
 			console.error("Get current user error:", error)
 			return {
 				success: false,
-				message: error.message || "Failed to fetch user data",
+				message:
+					error instanceof Error ? error.message : "Failed to fetch user data",
 			}
 		}
 	}
 
 	/**
 	 * Update user profile
-	 * @param {Object} updates - Profile updates
-	 * @returns {Promise<Object>} Update response
+	 * @param {Partial<User>} updates - Profile updates
+	 * @returns {Promise<UserResponse>} Update response
 	 */
-	async updateProfile(updates) {
+	async updateProfile(updates: Partial<User>): Promise<UserResponse> {
 		try {
 			const response = await fetch(`${API_BASE_URL}/auth/profile`, {
 				method: "PUT",
@@ -186,7 +239,8 @@ class AuthService {
 			console.error("Update profile error:", error)
 			return {
 				success: false,
-				message: error.message || "Failed to update profile",
+				message:
+					error instanceof Error ? error.message : "Failed to update profile",
 			}
 		}
 	}
@@ -194,10 +248,9 @@ class AuthService {
 	/**
 	 * Logout user
 	 */
-	logout() {
+	logout(): void {
 		localStorage.removeItem("token")
 		localStorage.removeItem("user")
-		// Optionally redirect to login page
 		window.location.href = "/login"
 	}
 
@@ -205,11 +258,10 @@ class AuthService {
 	 * Check if user is authenticated
 	 * @returns {boolean} Authentication status
 	 */
-	isAuthenticated() {
+	isAuthenticated(): boolean {
 		const token = this.getToken()
 		if (!token) return false
 
-		// Check if token is expired
 		try {
 			const payload = JSON.parse(atob(token.split(".")[1]))
 			const isExpired = payload.exp * 1000 < Date.now()
@@ -227,9 +279,9 @@ class AuthService {
 
 	/**
 	 * Get stored JWT token
-	 * @returns {string|null} JWT token
+	 * @returns {string | null} JWT token
 	 */
-	getToken() {
+	getToken(): string | null {
 		return localStorage.getItem("token")
 	}
 
@@ -237,32 +289,32 @@ class AuthService {
 	 * Store JWT token
 	 * @param {string} token - JWT token
 	 */
-	setToken(token) {
+	private setToken(token: string): void {
 		localStorage.setItem("token", token)
 	}
 
 	/**
 	 * Get stored user data
-	 * @returns {Object|null} User data
+	 * @returns {User | null} User data
 	 */
-	getUser() {
+	getUser(): User | null {
 		const userStr = localStorage.getItem("user")
 		return userStr ? JSON.parse(userStr) : null
 	}
 
 	/**
 	 * Store user data
-	 * @param {Object} user - User data
+	 * @param {User} user - User data
 	 */
-	setUser(user) {
+	private setUser(user: User): void {
 		localStorage.setItem("user", JSON.stringify(user))
 	}
 
 	/**
 	 * Get user role
-	 * @returns {string|null} User role
+	 * @returns {string | null} User role
 	 */
-	getUserRole() {
+	getUserRole(): string | null {
 		const user = this.getUser()
 		return user ? user.role : null
 	}
@@ -272,7 +324,7 @@ class AuthService {
 	 * @param {string} role - Role to check
 	 * @returns {boolean} Whether user has the role
 	 */
-	hasRole(role) {
+	hasRole(role: string): boolean {
 		return this.getUserRole() === role
 	}
 
@@ -280,15 +332,15 @@ class AuthService {
 	 * Check if user is admin
 	 * @returns {boolean} Whether user is admin
 	 */
-	isAdmin() {
+	isAdmin(): boolean {
 		return this.hasRole("admin")
 	}
 
 	/**
 	 * Health check
-	 * @returns {Promise<Object>} Health status
+	 * @returns {Promise<HealthResponse>} Health status
 	 */
-	async healthCheck() {
+	async healthCheck(): Promise<HealthResponse> {
 		try {
 			const response = await fetch(`${API_BASE_URL}/health`, {
 				method: "GET",
@@ -312,3 +364,15 @@ class AuthService {
 
 // Export singleton instance
 export default new AuthService()
+
+// Also export types for use in other files
+export type {
+	UserData,
+	LoginCredentials,
+	User,
+	AuthResponse,
+	LoginResponse,
+	RegisterResponse,
+	UserResponse,
+	HealthResponse,
+}

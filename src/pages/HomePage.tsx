@@ -1,7 +1,7 @@
 import CarrouselComp from "../components/CarrouselComp"
 import FeaturesComp from "../components/FeaturesComp"
 
-import { useIsAuthenticated } from "../hooks/useIsAuthenticated"
+import { useIsAuthenticated } from "../hooks/authService"
 
 const Home = (): JSX.Element => {
 	useIsAuthenticated()

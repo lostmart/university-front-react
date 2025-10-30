@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import boyImg from "../assets/img/boy-student-2.webp"
 import girlImg from "../assets/img/girl-student.webp"
 
-import { useIsAuthenticated } from "../hooks/useIsAuthenticated"
+import { useIsAuthenticated } from "../hooks/authService"
 
 const About: React.FC = () => {
 	useIsAuthenticated()

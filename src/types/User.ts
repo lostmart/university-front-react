@@ -1,8 +1,10 @@
 export type TFullUser = {
-	username: string
+	firstName: string
+	lastName: string
+	email: string
 	logged: boolean
-	firstName?: string
+	role: string
+	phone?: string
 	image?: string
-	lastName?: string
-	id?: number
+	isVerified?: boolean
 }
