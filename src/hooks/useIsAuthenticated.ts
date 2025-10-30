@@ -25,7 +25,7 @@ type UserError = {
 }
 
 const authUser = async (token: string): Promise<TFullUser | UserError> => {
-	const API_AUTH_USER = "https://dummyjson.com/user/me"
+	const API_AUTH_USER = "https://auth-microservice-ywe0.onrender.com/"
 
 	try {
 		const res = await fetch(API_AUTH_USER, {
