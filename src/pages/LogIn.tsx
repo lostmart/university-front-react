@@ -1,42 +1,38 @@
-import { useContext, useRef, useState } from "react"
-import ModalComp from "../components/ModalComp"
+// src/pages/Login.tsx
+import { useState, useRef, useContext } from "react"
 import { useNavigate } from "react-router-dom"
-import { TFormData } from "../types/FormData"
-import { TFormError } from "../types/FormError"
 import { UserContext } from "../context/UserContext"
-
-import LittlEye from "../components/LittlEye"
+import ModalComp from "../components/ModalComp" 
 import EyeClose from "../components/EyeClose"
+import LittlEye from "../components/LittlEye"
 
-const getErrorMessage = (error: unknown): string => {
-	let message: string
-
-	if (error instanceof Error) {
-		message = error.message
-	} else if (error && typeof error === "object" && "message" in error) {
-		message = String(error.message)
-	} else if (typeof error === "string") {
-		message = error
-	} else {
-		message = "Unknown Error... LogIn error"
-	}
-
-	return message
+type TFormData = {
+	email: string
+	password: string
 }
 
-const ParentComponent = (): JSX.Element => {
+type TFormError = {
+	error: boolean
+	status?: number
+	message?: string
+}
+
+const Login = (): JSX.Element => {
 	const [formData, setFormData] = useState<TFormData>({
-		username: "",
+		email: "",
 		password: "",
 	})
 
-	const { setUser } = useContext(UserContext)
+	const context = useContext(UserContext)
+	if (!context) throw new Error("UserContext must be used within UserProvider")
+
+	const { login } = context
 
 	const [formError, setFormError] = useState<TFormError | null>(null)
-
 	const [hidePass, setHidePass] = useState(true)
+	const [isLoading, setIsLoading] = useState(false)
 
-	const navigate = useNavigate() // Initialize useNavigate
+	const navigate = useNavigate()
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
@@ -46,61 +42,56 @@ const ParentComponent = (): JSX.Element => {
 		})
 	}
 
-	// emilys
-	// emilyspass
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		// test empty
-		if (formData.username.trim() === "" || formData.password.trim() === "") {
-			return false
+
+		// Validate empty fields
+		if (formData.email.trim() === "" || formData.password.trim() === "") {
+			setFormError({
+				error: true,
+				message: "Please fill in all fields",
+			})
+			openModal()
+			return
 		}
+
+		// Validate email format
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+		if (!emailRegex.test(formData.email)) {
+			setFormError({
+				error: true,
+				message: "Please enter a valid email address",
+			})
+			openModal()
+			return
+		}
+
+		setIsLoading(true)
+
 		try {
-			const API_ENDPOINT = "https://dummyjson.com/auth/login"
-			const res = await fetch(API_ENDPOINT, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					username: formData.username,
-					password: formData.password,
-					expiresInMins: 30,
-				}),
+			// Call login from context (uses userApi internally)
+			await login({
+				email: formData.email,
+				password: formData.password,
 			})
 
-			const data = await res.json()
-
-			// handle error
-			if (!res.ok) {
-				setFormError((prev) => ({
-					...prev,
-					error: true,
-					status: res.status,
-				}))
-			}
-			if (data.message === "Invalid credentials") {
-				const { message } = data
-				setFormError((prev) => ({
-					...prev,
-					message,
-				}))
-
-				openModal()
-				return
-			}
-			// if no errors navigate and setUser in Context
-			const { token } = data
-			sessionStorage.setItem("token", token)
+			// Success - navigate to profile/dashboard
 			navigate("/profile")
-			// console.log(data)
-			setUser((prev) => ({
-				...prev,
-				...data,
-				logged: true,
-			}))
 		} catch (error) {
-			console.log(error, "no no!")
-			return {
-				error: getErrorMessage(error),
-			}
+			// Handle login error
+			const errorMessage =
+				error instanceof Error
+					? error.message
+					: "Login failed. Please try again."
+
+			setFormError({
+				error: true,
+				message: errorMessage,
+			})
+
+			openModal()
+		} finally {
+			setIsLoading(false)
 		}
 	}
 
@@ -120,18 +111,23 @@ const ParentComponent = (): JSX.Element => {
 				/>
 				<h1 className="h3 mb-4 fw-normal">Please Log In</h1>
 
+				{/* Email Field */}
 				<div className="form-floating my-4">
 					<input
-						type="text"
+						type="email"
 						className="form-control"
-						placeholder="User Name"
-						name="username"
-						id="username"
+						placeholder="Email"
+						name="email"
+						id="email"
 						value={formData.email}
 						onChange={handleChange}
+						disabled={isLoading}
+						autoComplete="email"
 					/>
-					<label htmlFor="username">User Name</label>
+					<label htmlFor="email">Email</label>
 				</div>
+
+				{/* Password Field */}
 				<div className="form-floating my-4 pass-cont">
 					<input
 						type={hidePass ? "password" : "text"}
@@ -141,6 +137,8 @@ const ParentComponent = (): JSX.Element => {
 						name="password"
 						value={formData.password}
 						onChange={handleChange}
+						disabled={isLoading}
+						autoComplete="current-password"
 					/>
 					<label htmlFor="password">Password</label>
 					<span onMouseDown={() => setHidePass(!hidePass)}>
@@ -148,13 +146,42 @@ const ParentComponent = (): JSX.Element => {
 					</span>
 				</div>
 
-				<button className="w-100 btn btn-lg btn-primary my-4" type="submit">
-					Sign in
+				{/* Submit Button */}
+				<button
+					className="w-100 btn btn-lg btn-primary my-4"
+					type="submit"
+					disabled={isLoading}
+				>
+					{isLoading ? (
+						<>
+							<span
+								className="spinner-border spinner-border-sm me-2"
+								role="status"
+								aria-hidden="true"
+							></span>
+							Signing in...
+						</>
+					) : (
+						"Sign in"
+					)}
 				</button>
+
+				{/* Demo Credentials Helper (remove in production) */}
+				<div className="mt-3 p-3 bg-light rounded text-start">
+					<small className="text-muted">
+						<strong>Demo Accounts:</strong>
+						<br />
+						Admin: admin@parisclassictours.fr / admin123
+						<br />
+						Customer: marie.lefevre@email.fr / customer123
+					</small>
+				</div>
 			</form>
+
+			{/* Error Modal */}
 			<ModalComp
 				ref={modalRef}
-				message={formError?.message ? formError.message : ""}
+				message={formError?.message || ""}
 				onClick={() => {
 					setFormError(null)
 					setFormData((prev) => ({
@@ -167,4 +194,4 @@ const ParentComponent = (): JSX.Element => {
 	)
 }
 
-export default ParentComponent
+export default Login

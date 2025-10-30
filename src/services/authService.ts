@@ -1,379 +1,170 @@
 // src/services/authService.ts
 
+import { BackendUser, TFullUser } from "../types/User"
+
 const API_BASE_URL =
 	import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api/v1"
 const API_KEY = import.meta.env.VITE_API_KEY
 
-// Types
-interface UserData {
-	email: string
-	password: string
-	userName: string
-	role?: string
-}
-
-interface LoginCredentials {
-	email: string
-	password: string
-}
-
-interface User {
-	id: string
-	email: string
-	name: string
-	role: string
-	createdAt?: string
-	updatedAt?: string
-}
-
-interface AuthResponse {
-	success: boolean
-	data?: any
-	message?: string
-}
-
-interface LoginResponse extends AuthResponse {
-	data?: {
-		token: string
-		user: User
-	}
-}
-
-interface RegisterResponse extends AuthResponse {
-	data?: {
-		token: string
-		user: User
-	}
-}
-
-interface UserResponse extends AuthResponse {
-	data?: User
-}
-
-interface HealthResponse extends AuthResponse {
-	data?: {
-		status: string
-		timestamp: string
-	}
-}
-
-/**
- * Authentication Service
- * Handles all authentication-related API calls to the microservice
- */
-class AuthService {
-	/**
-	 * Get common headers including API key
-	 * @param {boolean} includeAuth - Whether to include JWT token
-	 * @returns {HeadersInit} Headers object
-	 */
-	private getHeaders(includeAuth: boolean = false): HeadersInit {
-		const headers: Record<string, string> = {
-			"Content-Type": "application/json",
-			"X-API-Key": API_KEY,
-		}
-
-		if (includeAuth) {
-			const token = this.getToken()
-			if (token) {
-				headers["Authorization"] = `Bearer ${token}`
-			}
-		}
-
-		return headers
+// Helper function to get auth headers
+const getAuthHeaders = (includeToken: boolean = false): HeadersInit => {
+	const headers: Record<string, string> = {
+		"Content-Type": "application/json",
+		"X-API-Key": API_KEY,
 	}
 
-	/**
-	 * Register a new user
-	 * @param {UserData} userData - User registration data
-	 * @returns {Promise<RegisterResponse>} Registration response
-	 */
-	async register(userData: UserData): Promise<RegisterResponse> {
-		try {
-			const response = await fetch(`${API_BASE_URL}/auth/register`, {
-				method: "POST",
-				headers: this.getHeaders(),
-				body: JSON.stringify({
-					email: userData.email,
-					password: userData.password,
-					name: userData.userName,
-					role: userData.role || "customer",
-				}),
-			})
-
-			const data = await response.json()
-
-			if (!response.ok) {
-				throw new Error(data.message || "Registration failed")
-			}
-
-			// Store token if registration is successful
-			if (data.token) {
-				this.setToken(data.token)
-				this.setUser(data.user)
-			}
-
-			return {
-				success: true,
-				data: data,
-				message: data.message || "Registration successful",
-			}
-		} catch (error) {
-			console.error("Registration error:", error)
-			return {
-				success: false,
-				message:
-					error instanceof Error
-						? error.message
-						: "Registration failed. Please try again.",
-			}
+	if (includeToken) {
+		const token = localStorage.getItem("token")
+		if (token) {
+			headers["Authorization"] = `Bearer ${token}`
 		}
 	}
 
-	/**
-	 * Login user
-	 * @param {LoginCredentials} credentials - Login credentials
-	 * @returns {Promise<LoginResponse>} Login response
-	 */
-	async login(credentials: LoginCredentials): Promise<LoginResponse> {
-		try {
-			const response = await fetch(`${API_BASE_URL}/auth/login`, {
-				method: "POST",
-				headers: this.getHeaders(),
-				body: JSON.stringify({
-					email: credentials.email,
-					password: credentials.password,
-				}),
-			})
-
-			const data = await response.json()
-
-			if (!response.ok) {
-				throw new Error(data.message || "Login failed")
-			}
-
-			// Store token and user data
-			if (data.token) {
-				this.setToken(data.token)
-				this.setUser(data.user)
-			}
-
-			return {
-				success: true,
-				data: data,
-				message: data.message || "Login successful",
-			}
-		} catch (error) {
-			console.error("Login error:", error)
-			return {
-				success: false,
-				message:
-					error instanceof Error
-						? error.message
-						: "Login failed. Please check your credentials.",
-			}
-		}
-	}
-
-	/**
-	 * Get current user profile
-	 * @returns {Promise<UserResponse>} User profile data
-	 */
-	async getCurrentUser(): Promise<UserResponse> {
-		try {
-			const response = await fetch(`${API_BASE_URL}/auth/me`, {
-				method: "GET",
-				headers: this.getHeaders(true),
-			})
-
-			const data = await response.json()
-
-			if (!response.ok) {
-				throw new Error(data.message || "Failed to fetch user data")
-			}
-
-			// Update stored user data
-			this.setUser(data.user)
-
-			return {
-				success: true,
-				data: data.user,
-			}
-		} catch (error) {
-			console.error("Get current user error:", error)
-			return {
-				success: false,
-				message:
-					error instanceof Error ? error.message : "Failed to fetch user data",
-			}
-		}
-	}
-
-	/**
-	 * Update user profile
-	 * @param {Partial<User>} updates - Profile updates
-	 * @returns {Promise<UserResponse>} Update response
-	 */
-	async updateProfile(updates: Partial<User>): Promise<UserResponse> {
-		try {
-			const response = await fetch(`${API_BASE_URL}/auth/profile`, {
-				method: "PUT",
-				headers: this.getHeaders(true),
-				body: JSON.stringify(updates),
-			})
-
-			const data = await response.json()
-
-			if (!response.ok) {
-				throw new Error(data.message || "Profile update failed")
-			}
-
-			// Update stored user data
-			this.setUser(data.user)
-
-			return {
-				success: true,
-				data: data.user,
-				message: data.message || "Profile updated successfully",
-			}
-		} catch (error) {
-			console.error("Update profile error:", error)
-			return {
-				success: false,
-				message:
-					error instanceof Error ? error.message : "Failed to update profile",
-			}
-		}
-	}
-
-	/**
-	 * Logout user
-	 */
-	logout(): void {
-		localStorage.removeItem("token")
-		localStorage.removeItem("user")
-		window.location.href = "/login"
-	}
-
-	/**
-	 * Check if user is authenticated
-	 * @returns {boolean} Authentication status
-	 */
-	isAuthenticated(): boolean {
-		const token = this.getToken()
-		if (!token) return false
-
-		try {
-			const payload = JSON.parse(atob(token.split(".")[1]))
-			const isExpired = payload.exp * 1000 < Date.now()
-
-			if (isExpired) {
-				this.logout()
-				return false
-			}
-
-			return true
-		} catch (error) {
-			return false
-		}
-	}
-
-	/**
-	 * Get stored JWT token
-	 * @returns {string | null} JWT token
-	 */
-	getToken(): string | null {
-		return localStorage.getItem("token")
-	}
-
-	/**
-	 * Store JWT token
-	 * @param {string} token - JWT token
-	 */
-	private setToken(token: string): void {
-		localStorage.setItem("token", token)
-	}
-
-	/**
-	 * Get stored user data
-	 * @returns {User | null} User data
-	 */
-	getUser(): User | null {
-		const userStr = localStorage.getItem("user")
-		return userStr ? JSON.parse(userStr) : null
-	}
-
-	/**
-	 * Store user data
-	 * @param {User} user - User data
-	 */
-	private setUser(user: User): void {
-		localStorage.setItem("user", JSON.stringify(user))
-	}
-
-	/**
-	 * Get user role
-	 * @returns {string | null} User role
-	 */
-	getUserRole(): string | null {
-		const user = this.getUser()
-		return user ? user.role : null
-	}
-
-	/**
-	 * Check if user has specific role
-	 * @param {string} role - Role to check
-	 * @returns {boolean} Whether user has the role
-	 */
-	hasRole(role: string): boolean {
-		return this.getUserRole() === role
-	}
-
-	/**
-	 * Check if user is admin
-	 * @returns {boolean} Whether user is admin
-	 */
-	isAdmin(): boolean {
-		return this.hasRole("admin")
-	}
-
-	/**
-	 * Health check
-	 * @returns {Promise<HealthResponse>} Health status
-	 */
-	async healthCheck(): Promise<HealthResponse> {
-		try {
-			const response = await fetch(`${API_BASE_URL}/health`, {
-				method: "GET",
-			})
-
-			const data = await response.json()
-
-			return {
-				success: response.ok,
-				data: data,
-			}
-		} catch (error) {
-			console.error("Health check error:", error)
-			return {
-				success: false,
-				message: "Service unavailable",
-			}
-		}
-	}
+	return headers
 }
 
-// Export singleton instance
-export default new AuthService()
+// Helper: Convert backend user (snake_case) to frontend user (camelCase)
+const mapBackendToFrontend = (backendUser: BackendUser): TFullUser => ({
+	firstName: backendUser.first_name,
+	lastName: backendUser.last_name,
+	email: backendUser.email,
+	phone: backendUser.phone || "",
+	role: backendUser.role,
+	logged: true,
+	image: "",
+	isVerified: Boolean(backendUser.is_verified),
+})
 
-// Also export types for use in other files
-export type {
-	UserData,
-	LoginCredentials,
-	User,
-	AuthResponse,
-	LoginResponse,
-	RegisterResponse,
-	UserResponse,
-	HealthResponse,
+// Helper: Convert frontend user (camelCase) to backend format (snake_case)
+const mapFrontendToBackend = (
+	frontendUser: Partial<TFullUser>
+): Partial<BackendUser> => {
+	const backendUser: Partial<BackendUser> = {}
+
+	if (frontendUser.firstName) backendUser.first_name = frontendUser.firstName
+	if (frontendUser.lastName) backendUser.last_name = frontendUser.lastName
+	if (frontendUser.email) backendUser.email = frontendUser.email
+	if (frontendUser.phone) backendUser.phone = frontendUser.phone
+	if (frontendUser.role) backendUser.role = frontendUser.role
+
+	return backendUser
+}
+
+export const userApi = {
+	// Login user
+	login: async (credentials: {
+		email: string
+		password: string
+	}): Promise<{ token: string; user: TFullUser }> => {
+		const response = await fetch(`${API_BASE_URL}/auth/login`, {
+			method: "POST",
+			headers: getAuthHeaders(),
+			body: JSON.stringify(credentials),
+		})
+
+		if (!response.ok) {
+			const error = await response.json()
+			throw new Error(error.message || "Failed to login")
+		}
+
+		const data = await response.json()
+		return {
+			token: data.token,
+			user: mapBackendToFrontend(data.user),
+		}
+	},
+
+	// Register new user
+	register: async (userData: {
+		email: string
+		password: string
+		firstName: string
+		lastName: string
+		phone?: string
+		role?: string
+	}): Promise<{ token: string; user: TFullUser }> => {
+		const response = await fetch(`${API_BASE_URL}/auth/register`, {
+			method: "POST",
+			headers: getAuthHeaders(),
+			body: JSON.stringify({
+				email: userData.email,
+				password: userData.password,
+				first_name: userData.firstName,
+				last_name: userData.lastName,
+				phone: userData.phone,
+				role: userData.role || "customer",
+			}),
+		})
+
+		if (!response.ok) {
+			const error = await response.json()
+			throw new Error(error.message || "Failed to register")
+		}
+
+		const data = await response.json()
+		return {
+			token: data.token,
+			user: mapBackendToFrontend(data.user),
+		}
+	},
+
+	// Get current user profile
+	getCurrentUser: async (): Promise<TFullUser> => {
+		const response = await fetch(`${API_BASE_URL}/auth/me`, {
+			method: "GET",
+			headers: getAuthHeaders(true),
+		})
+
+		if (!response.ok) {
+			throw new Error("Failed to fetch user profile")
+		}
+
+		const data = await response.json()
+		return mapBackendToFrontend(data.user)
+	},
+
+	// Update user profile
+	updateProfile: async (updates: Partial<TFullUser>): Promise<TFullUser> => {
+		const response = await fetch(`${API_BASE_URL}/auth/profile`, {
+			method: "PUT",
+			headers: getAuthHeaders(true),
+			body: JSON.stringify(mapFrontendToBackend(updates)),
+		})
+
+		if (!response.ok) {
+			const error = await response.json()
+			throw new Error(error.message || "Failed to update profile")
+		}
+
+		const data = await response.json()
+		return mapBackendToFrontend(data.user)
+	},
+
+	// Get all users (admin only)
+	getAllUsers: async (): Promise<TFullUser[]> => {
+		const response = await fetch(`${API_BASE_URL}/users`, {
+			method: "GET",
+			headers: getAuthHeaders(true),
+		})
+
+		if (!response.ok) {
+			throw new Error("Failed to fetch users")
+		}
+
+		const data = await response.json()
+		return data.users.map(mapBackendToFrontend)
+	},
+
+	// Health check
+	healthCheck: async (): Promise<{ status: string; timestamp: string }> => {
+		const response = await fetch(`${API_BASE_URL}/health`, {
+			method: "GET",
+		})
+
+		if (!response.ok) {
+			throw new Error("Service unavailable")
+		}
+
+		return response.json()
+	},
 }

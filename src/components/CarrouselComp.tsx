@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 const CarrouselComp = () => {
 	return (
 		<div id="myCarousel" className="carousel slide" data-bs-ride="carousel">
@@ -35,9 +37,9 @@ const CarrouselComp = () => {
 								<span className="display-6">Horizon University</span>
 							</p>
 							<p>
-								<a className="btn btn-lg btn-primary" href="#">
+								<Link to="/login" className="btn btn-lg btn-primary">
 									Sign up today
-								</a>
+								</Link>
 							</p>
 						</div>
 					</div>
@@ -53,9 +55,9 @@ const CarrouselComp = () => {
 								<span className="display-6">Horizon University</span>
 							</p>
 							<p>
-								<a className="btn btn-lg btn-primary" href="signIn.html">
-									Learn more
-								</a>
+								<Link to="/login" className="btn btn-lg btn-primary">
+									Learn More
+								</Link>
 							</p>
 						</div>
 					</div>
@@ -68,12 +70,12 @@ const CarrouselComp = () => {
 							<h2 className="display-5">Do somee stuff, then do some other</h2>
 							<p>
 								Do it now or never at
-								<span className="display-6">Horizon University</span>
+								<span className="display-6"> Horizon University</span>
 							</p>
 							<p>
-								<a className="btn btn-lg btn-primary" href="#">
-									Browse gallery
-								</a>
+								<Link to="/login" className="btn btn-lg btn-primary">
+									Sign up today
+								</Link>
 							</p>
 						</div>
 					</div>

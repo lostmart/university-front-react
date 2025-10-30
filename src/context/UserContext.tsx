@@ -1,6 +1,12 @@
 // src/context/UserContext.tsx
-import { createContext, useState, useEffect, ReactNode, useContext } from "react"
-import authService from "../services/authService"
+import {
+	createContext,
+	useState,
+	useEffect,
+	ReactNode,
+	useContext,
+} from "react"
+import { userApi } from "../services/authService"
 import { TFullUser } from "../types/User"
 
 // Auth method types
@@ -18,21 +24,15 @@ interface RegisterData {
 	role?: string
 }
 
-interface AuthResponse {
-	success: boolean
-	message?: string
-	data?: any
-}
-
 // Context type with both user state and auth methods
 export interface TAppContext {
 	user: TFullUser
 	setUser: React.Dispatch<React.SetStateAction<TFullUser>>
 	loading: boolean
-	login: (credentials: LoginCredentials) => Promise<AuthResponse>
-	register: (userData: RegisterData) => Promise<AuthResponse>
+	login: (credentials: LoginCredentials) => Promise<void>
+	register: (userData: RegisterData) => Promise<void>
 	logout: () => void
-	updateProfile: (updates: Partial<TFullUser>) => Promise<AuthResponse>
+	updateProfile: (updates: Partial<TFullUser>) => Promise<void>
 	isAdmin: () => boolean
 	hasRole: (role: string) => boolean
 }
@@ -53,6 +53,16 @@ const initialUser: TFullUser = {
 	isVerified: false,
 }
 
+// Helper: Check if token is expired
+const isTokenExpired = (token: string): boolean => {
+	try {
+		const payload = JSON.parse(atob(token.split(".")[1]))
+		return payload.exp * 1000 < Date.now()
+	} catch {
+		return true
+	}
+}
+
 // Create user context
 export const UserContext = createContext<TAppContext | null>(null)
 
@@ -64,115 +74,75 @@ const UserProvider = ({ children }: AppProviderProps) => {
 	useEffect(() => {
 		// Check if user is already logged in on mount
 		const checkAuth = async () => {
-			if (authService.isAuthenticated()) {
-				const storedUser = authService.getUser()
-				
-				if (storedUser) {
-					// Map backend user (snake_case) to TFullUser format (camelCase)
-					setUser({
-						firstName: storedUser.first_name || "",
-						lastName: storedUser.last_name || "",
-						email: storedUser.email,
-						logged: true,
-						role: storedUser.role,
-						phone: storedUser.phone || "",
-						image: "",
-						isVerified: Boolean(storedUser.is_verified),
-					})
-				}
+			const token = localStorage.getItem("token")
 
-				// Optionally fetch fresh user data
-				const result = await authService.getCurrentUser()
-				if (result.success && result.data) {
-					setUser({
-						firstName: result.data.first_name || "",
-						lastName: result.data.last_name || "",
-						email: result.data.email,
-						logged: true,
-						role: result.data.role,
-						phone: result.data.phone || "",
-						image: "",
-						isVerified: Boolean(result.data.is_verified),
-					})
+			if (token && !isTokenExpired(token)) {
+				try {
+					// Fetch fresh user data from API
+					const userData = await userApi.getCurrentUser()
+					setUser(userData)
+				} catch (error) {
+					console.error("Failed to fetch user:", error)
+					// Clear invalid token
+					localStorage.removeItem("token")
 				}
 			}
+
 			setLoading(false)
 		}
 
 		checkAuth()
 	}, [])
 
-	const login = async (credentials: LoginCredentials): Promise<AuthResponse> => {
-		const result = await authService.login(credentials)
-		
-		if (result.success && result.data) {
-			// Map backend user (snake_case) to TFullUser format (camelCase)
-			setUser({
-				firstName: result.data.user.first_name || "",
-				lastName: result.data.user.last_name || "",
-				email: result.data.user.email,
-				logged: true,
-				role: result.data.user.role,
-				phone: result.data.user.phone || "",
-				image: "",
-				isVerified: Boolean(result.data.user.is_verified),
-			})
+	const login = async (credentials: LoginCredentials): Promise<void> => {
+		try {
+			const { token, user: userData } = await userApi.login(credentials)
+
+			// Store token
+			localStorage.setItem("token", token)
+
+			// Update user state
+			setUser(userData)
+		} catch (error) {
+			console.error("Login error:", error)
+			throw error // Re-throw so component can handle it
 		}
-		
-		return result
 	}
 
-	const register = async (userData: RegisterData): Promise<AuthResponse> => {
-		const result = await authService.register(userData)
-		
-		if (result.success && result.data) {
-			// Map backend user (snake_case) to TFullUser format (camelCase)
-			setUser({
-				firstName: result.data.user.first_name || "",
-				lastName: result.data.user.last_name || "",
-				email: result.data.user.email,
-				logged: true,
-				role: result.data.user.role,
-				phone: result.data.user.phone || "",
-				image: "",
-				isVerified: Boolean(result.data.user.is_verified),
-			})
+	const register = async (userData: RegisterData): Promise<void> => {
+		try {
+			const { token, user: newUser } = await userApi.register(userData)
+
+			// Store token
+			localStorage.setItem("token", token)
+
+			// Update user state
+			setUser(newUser)
+		} catch (error) {
+			console.error("Register error:", error)
+			throw error
 		}
-		
-		return result
 	}
 
 	const logout = (): void => {
-		authService.logout()
+		// Clear storage
+		localStorage.removeItem("token")
+
+		// Reset user state
 		setUser(initialUser)
+
+		// Redirect to login
+		window.location.href = "/login"
 	}
 
-	const updateProfile = async (updates: Partial<TFullUser>): Promise<AuthResponse> => {
-		// Convert TFullUser format (camelCase) to backend format (snake_case)
-		const backendUpdates: any = {}
-		
-		if (updates.firstName) backendUpdates.first_name = updates.firstName
-		if (updates.lastName) backendUpdates.last_name = updates.lastName
-		if (updates.email) backendUpdates.email = updates.email
-		if (updates.phone) backendUpdates.phone = updates.phone
-		if (updates.image) backendUpdates.image = updates.image
-
-		const result = await authService.updateProfile(backendUpdates)
-		
-		if (result.success && result.data) {
-			setUser({
-				firstName: result.data.first_name || user.firstName,
-				lastName: result.data.last_name || user.lastName,
-				email: result.data.email || user.email,
-				logged: true,
-				role: result.data.role || user.role,
-				phone: result.data.phone || user.phone,
-				image: result.data.image || user.image,
-				isVerified: Boolean(result.data.is_verified) || user.isVerified,
-			})
+	const updateProfile = async (updates: Partial<TFullUser>): Promise<void> => {
+		try {
+			const updatedUser = await userApi.updateProfile(updates)
+			setUser(updatedUser)
+		} catch (error) {
+			console.error("Update profile error:", error)
+			throw error
 		}
-		
-		return result
 	}
 
 	const isAdmin = (): boolean => {
@@ -195,11 +165,7 @@ const UserProvider = ({ children }: AppProviderProps) => {
 		hasRole,
 	}
 
-	return (
-		<UserContext.Provider value={value}>
-			{children}
-		</UserContext.Provider>
-	)
+	return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
 
 export default UserProvider

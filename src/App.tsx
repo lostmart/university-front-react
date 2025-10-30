@@ -20,83 +20,51 @@ import SignUp from "./pages/SignUp"
 import ProfilePage from "./pages/ProfilePage"
 import ContactPage from "./pages/ContactPage"
 
-// Auth
-//import { isAuthenticated } from "./utils/Auth"
-
-// import { TFullUser } from "./types/User"
-
 // contextProvider
 import UserProvider from "./context/UserContext"
-// import { UserContext } from "./context/UserContext"
-
-// const getErrorMessage = (error: unknown): string => {
-// 	let message: string
-
-// 	if (error instanceof Error) {
-// 		message = error.message
-// 	} else if (error && typeof error === "object" && "message" in error) {
-// 		message = String(error.message)
-// 	} else if (typeof error === "string") {
-// 		message = error
-// 	} else {
-// 		message = "Unknown Error...git status"
-// 	}
-
-// 	return message
-// }
-
-// const authUser = async (token: string): Promise<TFullUser | Error> => {
-// 	const API_AUTH_USER = "https://dummyjson.com/user/me"
-
-// 	/* providing token in bearer */
-// 	try {
-// 		const res = await fetch(API_AUTH_USER, {
-// 			method: "GET",
-// 			headers: {
-// 				Authorization: `Bearer ${token}`,
-// 			},
-// 		})
-// 		const userData: TFullUser = await res.json()
-// 		return userData
-// 		// setUser((prev) => ({
-// 		//     ...prev
-// 		// }))
-// 	} catch (error) {
-// 		console.log(error)
-// 		return new Error(getErrorMessage(error))
-// 	}
-// }
+import { useEffect, useState } from "react"
+import { userApi } from "./services/authService"
 
 function App() {
-	// const { user, setUser } = useContext(UserContext)
+	const [apiStatus, setApiStatus] = useState<"checking" | "online" | "offline">(
+		"checking"
+	)
 
-	// const isAuthenticated = async () => {
-	// 	const token = sessionStorage.getItem("token")
+	useEffect(() => {
+		// Health check on app mount
+		const checkAPIHealth = async () => {
+			try {
+				const health = await userApi.healthCheck()
+				console.log("✅ API Health Check:", health)
+				setApiStatus("online")
+			} catch (error) {
+				console.error("❌ API Health Check Failed:", error)
+				setApiStatus("offline")
+			}
+		}
 
-	// 	// if no token in sessionStorage stop here
-	// 	if (!token) {
-	// 		// console.log("no token !!")
-	// 		return false
-	// 	} else {
-	// 		console.log(await authUser(token))
+		checkAPIHealth()
 
-	// 		if (await authUser(token)) {
-	// 			console.log("logged in !!")
+		// Optional: Check health every 5 minutes
+		const interval = setInterval(checkAPIHealth, 5 * 60 * 1000)
 
-	// 			setUser((prev) => ({
-	// 				...prev,
-	// 				//...authUser(token),
-	// 				logged: true,
-	// 			}))
-	// 		} else {
-	// 			return false
-	// 		}
-	// 	}
-	// }
+		return () => clearInterval(interval)
+	}, [])
 
 	return (
 		<UserProvider>
 			<Router>
+				{/* API Status Indicator (optional - can be removed) */}
+				{apiStatus === "offline" && (
+					<div
+						className="alert alert-danger text-center mb-0"
+						role="alert"
+						style={{ borderRadius: 0 }}
+					>
+						⚠️ Authentication service is currently unavailable. Please try again
+						later.
+					</div>
+				)}
 				<div className="container">
 					<HeaderComp />
 				</div>
