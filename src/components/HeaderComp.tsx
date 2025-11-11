@@ -6,46 +6,30 @@ const HeaderComp = (): JSX.Element => {
 	// const { user } = useContext(UserContext)
 
 	return (
-		<header className="header d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
-			{/* <button onClick={() => setLoggedIn(!loggedIn)}>logout</button> */}
-			<Link
-				to="/"
-				className="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-decoration-none"
-			>
-				<img
-					src="./img/favicons/android-chrome-192x192.png"
-					alt="horizon university"
-					className="university_icon"
-				/>
-			</Link>
-
-			<ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 text-light">
-				<li>
-					<Link to="/" className="nav-link px-2 link-light">
-						Home
-					</Link>
-				</li>
-				<li>
-					{/* review page link with animations  */}
-					<a href="/#features" className="nav-link px-2 link-light">
-						Features
-					</a>
-				</li>
-				<li>
-					<Link to="/about" className="nav-link px-2 link-light">
-						About
-					</Link>
-				</li>
-			</ul>
-
-			<div className="col-md-3 text-end login-section">
-				<Link to="/login" className="btn btn-outline-light me-2">
-					Login
-				</Link>
-				<Link to="/register" className="btn btn-primary">
-					Sign-up
-				</Link>
-			</div>
+		<header>
+			<nav className="bg-white shadow-sm">
+				<div className="max-w-7xl mx-auto px-4 py-4">
+					<div className="flex justify-between items-center">
+						<h1 className="text-2xl font-bold text-blue-600">
+							Horizon University
+						</h1>
+						<div className="space-x-6">
+							<Link to="#" className="text-gray-600 hover:text-blue-600">
+								Programs
+							</Link>
+							<Link to="/signup" className="text-gray-600 hover:text-blue-600">
+								Admissions
+							</Link>
+							<Link to="/about" className="text-gray-600 hover:text-blue-600">
+								About
+							</Link>
+							<button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+								Apply Now
+							</button>
+						</div>
+					</div>
+				</div>
+			</nav>
 		</header>
 	)
 }

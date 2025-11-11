@@ -1,0 +1,356 @@
+// ============================================
+// PARALLAX BACKGROUND STYLES
+// ============================================
+
+.parallax-bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+	z-index: -1;
+	pointer-events: none;
+
+	// Base layer styles
+	&__layer {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0.4;
+
+		// Different animation speeds for depth
+		&--1 {
+			animation: float 20s ease-in-out infinite;
+		}
+		&--2 {
+			animation: float 25s ease-in-out infinite reverse;
+		}
+		&--3 {
+			animation: float 30s ease-in-out infinite;
+		}
+		&--4 {
+			animation: float 35s ease-in-out infinite reverse;
+		}
+		&--5 {
+			animation: float 40s ease-in-out infinite;
+		}
+	}
+
+	// Grid Pattern
+	&__grid {
+		width: 100%;
+		height: 100%;
+		background-image: linear-gradient(
+				rgba(59, 130, 246, 0.05) 1px,
+				transparent 1px
+			),
+			linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+		background-size: 80px 80px;
+		animation: gridMove 20s linear infinite;
+	}
+
+	// Dots Pattern
+	&__dots {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-image: radial-gradient(
+			circle,
+			rgba(99, 102, 241, 0.1) 1px,
+			transparent 1px
+		);
+		background-size: 40px 40px;
+		animation: gridMove 30s linear infinite reverse;
+	}
+
+	// Floating Text
+	&__floating-text {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		gap: 4rem;
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: rgba(59, 130, 246, 0.08);
+		white-space: nowrap;
+
+		&--1 {
+			top: 10%;
+			left: 5%;
+			animation: floatVertical 15s ease-in-out infinite;
+		}
+
+		&--2 {
+			top: 30%;
+			right: 5%;
+			animation: floatVertical 20s ease-in-out infinite reverse;
+		}
+
+		span {
+			display: block;
+			animation: pulse 4s ease-in-out infinite;
+
+			&:nth-child(odd) {
+				animation-delay: 0.5s;
+			}
+
+			&:nth-child(3n) {
+				animation-delay: 1s;
+			}
+		}
+	}
+
+	// Diagonal Scrolling Text
+	&__diagonal {
+		position: absolute;
+		display: flex;
+		gap: 3rem;
+		font-size: 1.2rem;
+		font-weight: 600;
+		color: rgba(99, 102, 241, 0.06);
+		white-space: nowrap;
+		transform-origin: center;
+
+		&--1 {
+			top: 20%;
+			left: -50%;
+			transform: rotate(-45deg);
+			animation: scrollDiagonal1 40s linear infinite;
+			width: 200%;
+		}
+
+		&--2 {
+			bottom: 20%;
+			right: -50%;
+			transform: rotate(-45deg);
+			animation: scrollDiagonal2 35s linear infinite reverse;
+			width: 200%;
+		}
+
+		span {
+			display: inline-block;
+			padding: 0 2rem;
+			opacity: 0.8;
+		}
+	}
+
+	// Horizontal Scrolling
+	&__horizontal {
+		position: absolute;
+		display: flex;
+		gap: 4rem;
+		font-size: 3rem;
+		white-space: nowrap;
+		width: max-content;
+
+		&--1 {
+			top: 50%;
+			left: 0;
+			animation: scrollHorizontal 25s linear infinite;
+		}
+
+		span {
+			display: inline-block;
+			opacity: 0.15;
+		}
+	}
+
+	// Gradient Orbs
+	&__orb {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(80px);
+		opacity: 0.3;
+		animation: orbFloat 15s ease-in-out infinite;
+
+		&--1 {
+			width: 500px;
+			height: 500px;
+			background: radial-gradient(circle, rgba(59, 130, 246, 0.3), transparent);
+			top: -10%;
+			right: 10%;
+			animation-delay: 0s;
+		}
+
+		&--2 {
+			width: 400px;
+			height: 400px;
+			background: radial-gradient(circle, rgba(99, 102, 241, 0.3), transparent);
+			bottom: 10%;
+			left: 5%;
+			animation-delay: 2s;
+		}
+
+		&--3 {
+			width: 600px;
+			height: 600px;
+			background: radial-gradient(circle, rgba(79, 70, 229, 0.2), transparent);
+			top: 40%;
+			left: 40%;
+			animation-delay: 4s;
+		}
+	}
+}
+
+// ============================================
+// ANIMATIONS
+// ============================================
+
+@keyframes float {
+	0%,
+	100% {
+		transform: translate(0, 0) scale(1);
+	}
+	33% {
+		transform: translate(10px, -10px) scale(1.02);
+	}
+	66% {
+		transform: translate(-10px, 10px) scale(0.98);
+	}
+}
+
+@keyframes gridMove {
+	0% {
+		transform: translate(0, 0);
+	}
+	100% {
+		transform: translate(80px, 80px);
+	}
+}
+
+@keyframes floatVertical {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-30px);
+	}
+}
+
+@keyframes pulse {
+	0%,
+	100% {
+		opacity: 0.6;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 1;
+		transform: scale(1.05);
+	}
+}
+
+@keyframes scrollDiagonal1 {
+	0% {
+		transform: rotate(-45deg) translateX(0);
+	}
+	100% {
+		transform: rotate(-45deg) translateX(-50%);
+	}
+}
+
+@keyframes scrollDiagonal2 {
+	0% {
+		transform: rotate(-45deg) translateX(0);
+	}
+	100% {
+		transform: rotate(-45deg) translateX(50%);
+	}
+}
+
+@keyframes scrollHorizontal {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-50%);
+	}
+}
+
+@keyframes orbFloat {
+	0%,
+	100% {
+		transform: translate(0, 0) scale(1);
+	}
+	33% {
+		transform: translate(30px, -30px) scale(1.1);
+	}
+	66% {
+		transform: translate(-20px, 20px) scale(0.9);
+	}
+}
+
+// ============================================
+// RESPONSIVE
+// ============================================
+
+@media (max-width: 1024px) {
+	.parallax-bg {
+		&__floating-text {
+			font-size: 1.2rem;
+			gap: 3rem;
+		}
+
+		&__diagonal {
+			font-size: 1rem;
+			gap: 2rem;
+		}
+
+		&__horizontal {
+			font-size: 2rem;
+			gap: 3rem;
+		}
+
+		&__orb {
+			&--1 {
+				width: 350px;
+				height: 350px;
+			}
+			&--2 {
+				width: 300px;
+				height: 300px;
+			}
+			&--3 {
+				width: 400px;
+				height: 400px;
+			}
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.parallax-bg {
+		&__layer {
+			opacity: 0.2;
+		}
+
+		&__floating-text {
+			display: none;
+		}
+
+		&__diagonal {
+			font-size: 0.9rem;
+			gap: 1.5rem;
+		}
+
+		&__horizontal {
+			font-size: 1.5rem;
+			gap: 2rem;
+		}
+	}
+}
+
+// Performance optimizations
+@media (prefers-reduced-motion: reduce) {
+	.parallax-bg {
+		* {
+			animation: none !important;
+			transition: none !important;
+		}
+	}
+}
