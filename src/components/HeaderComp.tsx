@@ -1,9 +1,9 @@
-import { useContext } from "react"
+import { JSX } from "react"
 import { Link } from "react-router-dom"
-import { UserContext } from "../context/UserContext"
+// import { UserContext } from "../context/UserContext"
 
 const HeaderComp = (): JSX.Element => {
-	const { user } = useContext(UserContext)
+	// const { user } = useContext(UserContext)
 
 	return (
 		<header className="header d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
