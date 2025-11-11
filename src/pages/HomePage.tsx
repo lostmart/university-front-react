@@ -1,9 +1,10 @@
 import CarrouselComp from "../components/CarrouselComp"
 import FeaturesComp from "../components/FeaturesComp"
+import React from "react"
 
 import { useIsAuthenticated } from "../hooks/authService"
 
-const Home = (): JSX.Element => {
+const Home = (): React.JSX.Element => {
 	useIsAuthenticated()
 	return (
 		<main aria-label="Horizon University">

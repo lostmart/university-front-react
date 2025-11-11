@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
-import { useContext, useEffect } from "react"
-import { UserContext } from "../context/UserContext"
+// import { useContext, useEffect } from "react"
+// import { UserContext } from "../context/UserContext"
 
 import { useIsAuthenticated } from "../hooks/authService"
 import { Link } from "react-router-dom"
@@ -11,18 +11,18 @@ const ProfilePage = () => {
 	const navigate = useNavigate()
 
 	// empty valued user
-	const initialUser = {
-		username: "Guest",
-		logged: false,
-	}
+	// const initialUser = {
+	// 	username: "Guest",
+	// 	logged: false,
+	// }
 
-	const { user, setUser } = useContext(UserContext)
+	// const { user, setUser } = useContext(UserContext)
 
-	useEffect(() => {
-		if (!user.logged) {
-			navigate("/")
-		}
-	}, [user, navigate])
+	// useEffect(() => {
+	// 	if (!user.logged) {
+	// 		navigate("/")
+	// 	}
+	// }, [user, navigate])
 
 	return (
 		<main className="container">
@@ -31,7 +31,7 @@ const ProfilePage = () => {
 				<div className="row g-4 pt-4">
 					<div className="col-md-6 position-relative text-center">
 						<article className="p-3 mt-4 rounded-2">
-							{user && (
+							{/* {user && (
 								<>
 									<img
 										className="profile-pic"
@@ -43,13 +43,13 @@ const ProfilePage = () => {
 									</h3>
 									<p> {user.username}</p>
 								</>
-							)}
+							)} */}
 							<button
 								className="btn btn-outline-primary mt-4"
 								onClick={() => {
 									navigate("/")
 									sessionStorage.clear()
-									return setUser(initialUser)
+									return true
 								}}
 							>
 								log out
