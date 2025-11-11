@@ -1,7 +1,7 @@
 # 🎓 University Frontend - Authentication Integration
 
 Complete authentication system connecting your React frontend to your deployed microservice at:
-**https://auth-microservice-ywe0.onrender.com/**
+**https://auth-microservice-production-8b7f.up.railway.app/**
 
 ---
 

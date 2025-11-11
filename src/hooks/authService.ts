@@ -25,7 +25,7 @@ type UserError = {
 }
 
 const authUser = async (token: string): Promise<TFullUser | UserError> => {
-	const API_AUTH_USER = "https://auth-microservice-ywe0.onrender.com/"
+	const API_AUTH_USER = env.VITE_API_AUTH_USER
 
 	try {
 		const res = await fetch(API_AUTH_USER, {

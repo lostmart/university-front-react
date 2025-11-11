@@ -56,7 +56,7 @@ export const userApi = {
 		password: string
 	}): Promise<{ token: string; user: TFullUser }> => {
 		const response = await fetch(
-			`https://auth-microservice-ywe0.onrender.com/api/v1/auth/login`,
+			API_BASE_URL + "/auth/login",
 			{
 				method: "POST",
 				headers: {
