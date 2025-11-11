@@ -51,16 +51,25 @@ const mapFrontendToBackend = (
 }
 
 export const userApi = {
-	// Login user
 	login: async (credentials: {
 		email: string
 		password: string
 	}): Promise<{ token: string; user: TFullUser }> => {
-		const response = await fetch(`${API_BASE_URL}/auth/login`, {
-			method: "POST",
-			headers: getAuthHeaders(),
-			body: JSON.stringify(credentials),
-		})
+		const response = await fetch(
+			`https://auth-microservice-ywe0.onrender.com/api/v1/auth/login`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"x-api-key":
+						"10b7a614791eb7d7f125a6b2a75cba2a707d8b3a00fdf8e93f3b2996ef241cac",
+				},
+				body: JSON.stringify({
+					email: credentials.email,
+					password: credentials.password,
+				}),
+			}
+		)
 
 		if (!response.ok) {
 			const error = await response.json()
@@ -73,6 +82,31 @@ export const userApi = {
 			user: mapBackendToFrontend(data.user),
 		}
 	},
+
+	// Login user
+	// TODO: DE	BUG
+	// login: async (credentials: {
+	// 	email: string
+	// 	password: string
+	// }): Promise<{ token: string; user: TFullUser }> => {
+	// 	console.log("Logging in TO:", `${API_BASE_URL}/auth/login`)
+	// 	const response = await fetch(`${API_BASE_URL}/auth/login`, {
+	// 		method: "POST",
+	// 		headers: getAuthHeaders(),
+	// 		body: JSON.stringify(credentials),
+	// 	})
+
+	// 	if (!response.ok) {
+	// 		const error = await response.json()
+	// 		throw new Error(error.message || "Failed to login")
+	// 	}
+
+	// 	const data = await response.json()
+	// 	return {
+	// 		token: data.token,
+	// 		user: mapBackendToFrontend(data.user),
+	// 	}
+	// },
 
 	// Register new user
 	register: async (userData: {
