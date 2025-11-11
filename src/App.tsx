@@ -2,8 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 // import { useContext, useEffect } from "react"
 import HeaderComp from "./components/HeaderComp"
 import FooterComp from "./components/FooterComp"
-import "./assets/css/bootstrap.min.css" // custom bootstrap css min
-import "bootstrap/dist/js/bootstrap.bundle.min"
 import "./assets/css/carousel.css"
 import "./assets/css/signUp.css"
 import "./styles.scss"

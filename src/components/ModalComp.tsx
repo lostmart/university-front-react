@@ -1,5 +1,4 @@
 import { forwardRef, useImperativeHandle, useRef } from "react"
-import { Modal } from "bootstrap"
 
 type TModalComp = {
 	message: string
@@ -12,17 +11,14 @@ const ModalComp = forwardRef((props: TModalComp, ref) => {
 
 	useImperativeHandle(ref, () => ({
 		show: () => {
-			if (modalRef.current) {
-				const modal = new Modal(modalRef.current)
-				modal.show()
-			}
+			return true
 		},
-		hide: () => {
-			if (modalRef.current) {
-				const modal = Modal.getInstance(modalRef.current)
-				modal?.hide()
-			}
-		},
+		// hide: () => {
+		// 	if (modalRef.current) {
+		// 		const modal = Modal.getInstance(modalRef.current)
+		// 		modal?.hide()
+		// 	}
+		// },
 	}))
 
 	return (

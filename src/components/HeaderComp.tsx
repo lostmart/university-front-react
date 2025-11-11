@@ -39,24 +39,12 @@ const HeaderComp = (): JSX.Element => {
 			</ul>
 
 			<div className="col-md-3 text-end login-section">
-				{user.logged ? (
-					<Link to="/profile" className="btn btn-primary me-2 avatar-pic">
-						Profile
-						<img
-							src="https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="
-							alt="profile pic"
-						/>
-					</Link>
-				) : (
-					<>
-						<Link to="/logIn" className="btn btn-outline-primary me-2">
-							Login
-						</Link>
-						<Link to="/signUp" className="btn btn-primary">
-							Sign-up
-						</Link>
-					</>
-				)}
+				<Link to="/login" className="btn btn-outline-light me-2">
+					Login
+				</Link>
+				<Link to="/register" className="btn btn-primary">
+					Sign-up
+				</Link>
 			</div>
 		</header>
 	)
