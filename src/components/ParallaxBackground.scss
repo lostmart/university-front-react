@@ -9,7 +9,7 @@
 	width: 100%;
 	height: 100vh;
 	overflow: hidden;
-	z-index: -1;
+	z-index: 1050;
 	pointer-events: none;
 
 	// Base layer styles
@@ -19,7 +19,7 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		opacity: 0.4;
+		opacity: 0.8;
 
 		// Different animation speeds for depth
 		&--1 {
@@ -236,7 +236,7 @@
 @keyframes pulse {
 	0%,
 	100% {
-		opacity: 0.6;
+		opacity: 0.7;
 		transform: scale(1);
 	}
 	50% {

@@ -7,7 +7,7 @@ const HeaderComp = (): JSX.Element => {
 
 	return (
 		<header>
-			<nav className="bg-white shadow-sm">
+			<nav className="bg-white/90 backdrop-blur-sm shadow-sm sticky top-0 z-50">
 				<div className="max-w-7xl mx-auto px-4 py-4">
 					<div className="flex justify-between items-center">
 						<h1 className="text-2xl font-bold text-blue-600">
