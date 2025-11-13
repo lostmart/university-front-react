@@ -20,6 +20,7 @@ import ContactPage from "./pages/ContactPage"
 import UserProvider from "./context/UserContext"
 import { useEffect, useState } from "react"
 import { userApi } from "./services/authService"
+import { ThemeProvider } from "./context/ThemeContext"
 
 function App() {
 	const [apiStatus, setApiStatus] = useState<"checking" | "online" | "offline">(
@@ -48,36 +49,38 @@ function App() {
 	}, [])
 
 	return (
-		<UserProvider>
-			<Router>
-				{/* API Status Indicator (optional - can be removed) */}
-				{apiStatus === "offline" && (
-					<div
-						className="alert alert-danger text-center mb-0"
-						role="alert"
-						style={{ borderRadius: 0 }}
-					>
-						⚠️ Authentication service is currently unavailable. Please try again
-						later.
+		<ThemeProvider>
+			<UserProvider>
+				<Router>
+					{/* API Status Indicator (optional - can be removed) */}
+					{apiStatus === "offline" && (
+						<div
+							className="alert alert-danger text-center mb-0"
+							role="alert"
+							style={{ borderRadius: 0 }}
+						>
+							⚠️ Authentication service is currently unavailable. Please try
+							again later.
+						</div>
+					)}
+					<div className="container">
+						<HeaderComp />
 					</div>
-				)}
-				<div className="container">
-					<HeaderComp />
-				</div>
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/about" element={<About />} />
-					<Route path="/login" element={<LogIn />} />
-					<Route path="/signup" element={<SignUp />} />
-					<Route path="/profile" element={<ProfilePage />} />
-					<Route path="/contact/:id" element={<ContactPage />} />
-					<Route path="*" element={<NotFound />} />
-				</Routes>
-				<div className="container">
-					<FooterComp />
-				</div>
-			</Router>
-		</UserProvider>
+					<Routes>
+						<Route path="/" element={<Home />} />
+						<Route path="/about" element={<About />} />
+						<Route path="/login" element={<LogIn />} />
+						<Route path="/signup" element={<SignUp />} />
+						<Route path="/profile" element={<ProfilePage />} />
+						<Route path="/contact/:id" element={<ContactPage />} />
+						<Route path="*" element={<NotFound />} />
+					</Routes>
+					<div className="container">
+						<FooterComp />
+					</div>
+				</Router>
+			</UserProvider>
+		</ThemeProvider>
 	)
 }
 
