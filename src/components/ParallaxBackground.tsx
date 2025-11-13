@@ -2,7 +2,7 @@ import "./ParallaxBackground.scss"
 
 const ParallaxBackground = () => {
 	return (
-		<div className="parallax-bg">
+		<div className="parallax-bg dark:text-white dark:bg-gray-900">
 			{/* Layer 1 - Grid Pattern */}
 			<div className="parallax-bg__layer parallax-bg__layer--1">
 				<div className="parallax-bg__grid"></div>

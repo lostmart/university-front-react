@@ -1,50 +1,15 @@
+import HeroSection from "@/components/HeroSection"
 import ParallaxBackground from "../components/ParallaxBackground"
 
 const HomePage = () => {
 	return (
 		<>
 			<ParallaxBackground />
-			<div className="min-h-screen bg-gray-50 relative">
+			<div className="min-h-screen relative">
 				{/* Navigation */}
 
 				{/* Hero Section */}
-				<section className="text-white">
-					<div className="max-w-7xl mx-auto px-4 py-24">
-						<div className="max-w-3xl">
-							<h2 className="text-5xl font-bold mb-6">
-								Shape Your Future Today
-							</h2>
-							<p className="text-xl mb-8 text-blue-100">
-								Join Horizon University where innovation meets excellence.
-								Discover world-class programs designed to transform your
-								ambitions into achievements.
-							</p>
-							<div className="flex gap-4">
-								<button className="text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100">
-									Apply Now
-								</button>
-								<button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10">
-									Learn More
-								</button>
-							</div>
-
-							<div className="flex gap-12 mt-12">
-								<div>
-									<div className="text-4xl font-bold">50K+</div>
-									<div className="text-blue-200">Students</div>
-								</div>
-								<div>
-									<div className="text-4xl font-bold">200+</div>
-									<div className="text-blue-200">Programs</div>
-								</div>
-								<div>
-									<div className="text-4xl font-bold">95%</div>
-									<div className="text-blue-200">Employment Rate</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
+				<HeroSection />
 
 				{/* Features */}
 				<section className="py-20">
@@ -156,9 +121,6 @@ const HomePage = () => {
 						</div>
 					</div>
 				</section>
-
-				{/* Footer */}
-				
 			</div>
 		</>
 	)
