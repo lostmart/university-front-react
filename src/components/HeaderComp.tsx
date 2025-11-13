@@ -9,7 +9,7 @@ const HeaderComp = (): JSX.Element => {
 	return (
 		<header>
 			<nav className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-sm dark:shadow-gray-800/50 sticky top-0 z-50 transition-colors duration-200">
-				<div className="max-w-7xl mx-auto px-4 py-4">
+				<div className="container mx-auto px-4 py-4">
 					<div className="flex justify-between items-center">
 						<h1 className="text-2xl font-bold text-blue-600 dark:text-blue-400">
 							Horizon University

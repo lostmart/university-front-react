@@ -63,9 +63,9 @@ function App() {
 							again later.
 						</div>
 					)}
-					<div className="container">
-						<HeaderComp />
-					</div>
+
+					<HeaderComp />
+
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="/about" element={<About />} />
@@ -75,9 +75,8 @@ function App() {
 						<Route path="/contact/:id" element={<ContactPage />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>
-					<div className="container">
-						<FooterComp />
-					</div>
+
+					<FooterComp />
 				</Router>
 			</UserProvider>
 		</ThemeProvider>
