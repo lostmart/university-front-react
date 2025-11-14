@@ -7,7 +7,7 @@ const HeaderComp = (): JSX.Element => {
 	// const { user } = useContext(UserContext)
 
 	return (
-		<header className="fixed w-full z-50">
+		<header className="fixed w-full z-50 top-0">
 			<nav className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-sm dark:shadow-gray-800/50 sticky top-0 z-50 transition-colors duration-200">
 				<div className="container mx-auto px-4 py-4">
 					<div className="flex justify-between items-center">
@@ -33,7 +33,7 @@ const HeaderComp = (): JSX.Element => {
 							>
 								About
 							</Link>
-							<button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors">
+							<button className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-all">
 								Apply Now
 							</button>
 							<ThemeSelectComp />
