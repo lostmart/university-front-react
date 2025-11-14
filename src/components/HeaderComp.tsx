@@ -7,7 +7,7 @@ const HeaderComp = (): JSX.Element => {
 	// const { user } = useContext(UserContext)
 
 	return (
-		<header>
+		<header className="fixed w-full z-50">
 			<nav className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-sm dark:shadow-gray-800/50 sticky top-0 z-50 transition-colors duration-200">
 				<div className="container mx-auto px-4 py-4">
 					<div className="flex justify-between items-center">

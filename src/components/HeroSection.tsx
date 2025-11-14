@@ -1,6 +1,6 @@
 const HeroSection = () => {
 	return (
-		<section className="text-gray-900 dark:text-white transition-colors duration-200">
+		<section className="text-gray-900 dark:text-white transition-colors duration-200 pt-20">
 			<div className="max-w-7xl mx-auto px-4 py-24">
 				<div className="max-w-3xl">
 					<h2 className="text-5xl font-bold mb-6 text-gray-900 dark:text-white">

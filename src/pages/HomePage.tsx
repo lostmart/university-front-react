@@ -1,106 +1,18 @@
 import HeroSection from "@/components/HeroSection"
 import ParallaxBackground from "../components/ParallaxBackground"
+import FeatureComp from "@/components/FeatureComp"
+import ProgramsComp from "@/components/ProgramsComp"
 
 const HomePage = () => {
 	return (
 		<>
 			<ParallaxBackground />
 			<div className="min-h-screen relative">
-				{/* Navigation */}
-
-				{/* Hero Section */}
 				<HeroSection />
 
-				{/* Features */}
-				<section className="py-20">
-					<div className="max-w-7xl mx-auto px-4">
-						<div className="text-center mb-16">
-							<h2 className="text-4xl font-bold text-gray-900 mb-4">
-								Why Choose Horizon University
-							</h2>
-							<p className="text-xl text-gray-600">
-								Excellence in every dimension
-							</p>
-						</div>
+				<FeatureComp />
 
-						<div className="grid md:grid-cols-3 gap-8">
-							<div className="p-8 rounded-xl shadow-lg">
-								<div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-									<span className="text-2xl">🎓</span>
-								</div>
-								<h3 className="text-xl font-bold mb-3">World-Class Faculty</h3>
-								<p className="text-gray-600">
-									Learn from industry leaders and renowned researchers
-								</p>
-							</div>
-
-							<div className="p-8 rounded-xl shadow-lg">
-								<div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-									<span className="text-2xl">🌍</span>
-								</div>
-								<h3 className="text-xl font-bold mb-3">Global Network</h3>
-								<p className="text-gray-600">
-									Connect with students from 100+ countries worldwide
-								</p>
-							</div>
-
-							<div className="p-8 rounded-xl shadow-lg">
-								<div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-									<span className="text-2xl">💼</span>
-								</div>
-								<h3 className="text-xl font-bold mb-3">Career Success</h3>
-								<p className="text-gray-600">
-									95% employment rate within 6 months of graduation
-								</p>
-							</div>
-						</div>
-					</div>
-				</section>
-
-				{/* Programs */}
-				<section className="py-20">
-					<div className="max-w-7xl mx-auto px-4">
-						<div className="text-center mb-16">
-							<h2 className="text-4xl font-bold text-gray-900 mb-4">
-								Popular Programs
-							</h2>
-							<p className="text-xl text-gray-600">Find your path to success</p>
-						</div>
-
-						<div className="grid md:grid-cols-3 gap-8">
-							{[
-								{ title: "Computer Science", students: "2,500+", icon: "💻" },
-								{
-									title: "Business Management",
-									students: "3,200+",
-									icon: "📊",
-								},
-								{ title: "Engineering", students: "4,100+", icon: "⚙️" },
-								{ title: "Health Sciences", students: "1,800+", icon: "🏥" },
-								{ title: "Arts & Design", students: "1,500+", icon: "🎨" },
-								{
-									title: "Environmental Science",
-									students: "900+",
-									icon: "🌱",
-								},
-							].map((program, index) => (
-								<div
-									key={index}
-									className="border-2 border-gray-200 rounded-xl p-6 hover:shadow-xl hover:border-blue-300 transition-all cursor-pointer"
-								>
-									<div className="text-4xl mb-4">{program.icon}</div>
-									<h3 className="text-xl font-bold mb-2">{program.title}</h3>
-									<p className="text-gray-600 mb-4">
-										{program.students} students
-									</p>
-									<button className="text-blue-600 font-semibold hover:text-blue-700">
-										Learn More →
-									</button>
-								</div>
-							))}
-						</div>
-					</div>
-				</section>
+				<ProgramsComp />
 
 				{/* CTA */}
 				<section className="py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
